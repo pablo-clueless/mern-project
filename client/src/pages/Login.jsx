@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import Cookies from 'universal-cookie'
 
 import { useFormInputs, useHttpRequest } from '../hooks'
-import { Button, InputField } from '../components'
+import { Button, InputField, Toast } from '../components'
 import { PASSWORD_REGEX } from '../libs'
 import { Spinner } from '../assets'
+import { login } from '../store/features/authSlice'
 
 const initialState = { username: '', password: ''}
 const initialError = { username: null, password: null }
@@ -16,7 +18,8 @@ const Login = () => {
   const { clearError, error, loading, sendRequest } = useHttpRequest()
   const { inputs, handleChange, resetValues } = useFormInputs(initialState)
   const [inputError, setInputError] = useState(initialError)
-  const [isValid, setIsValid] = useState(true)
+  const navigate = useNavigate()
+  const cookies = new Cookies()
 
   const handleLogin = async(e) => {
     e.preventDefault()
@@ -32,12 +35,18 @@ const Login = () => {
     }
     const headers = { 'Content-Type': 'application/json' }
     const payload = { username, password }
-    console.log(payload)
-    const data = await sendRequest(`${url}/auth/signin`, 'POST', JSON.stringify(payload), headers)
-    console.log(data)
+    const response = await sendRequest(`${url}/auth/signin`, 'POST', JSON.stringify(payload), headers)
+    if(!response || response === undefined) return
+    const { data } = response
+    dispatch(login(data))
+    cookies.set('token', data.token)
+    cookies.set('userId', data.id)
+    navigate(`/user/${data.username}`)
   }
 
   return (
+    <>
+    {error && <Toast type='error' message={error} onClose={clearError} />}
     <div className='w-screen h-screen grid place-items-center bg-login bg-no-repeat bg-contain bg-center'>
       <div className='w-4/5 md:w-500 flex flex-col items-center bg-white bg-opacity-75 py-4'>
         <p className='text-2xl font-bold font-aboreto text-primary mt-2 mb-4'>Welcome back!</p>
@@ -54,6 +63,7 @@ const Login = () => {
         </p>
       </div>
     </div>
+    </>
   )
 }
 

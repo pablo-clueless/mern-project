@@ -18,7 +18,7 @@ const signin = async(req, res, next) => {
             const token = jwt.sign({ id: existingUser._id }, secret, { expiresIn: 86400 })
             req.session.token = token
             const { id, fullName, username, email } = existingUser
-            res.status(200).json({message: 'Signin successful.', data: {id, fullName, username, email}})
+            res.status(200).json({message: 'Signin successful.', data: {id, fullName, username, email, token}})
         } else {
             return res.status(400).json({message: 'Invalid password, please try again.',})
         }

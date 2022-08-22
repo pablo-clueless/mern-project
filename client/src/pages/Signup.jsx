@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { useFormInputs, useHttpRequest } from '../hooks'
-import { Button, InputField } from '../components'
+import { Button, InputField, Toast } from '../components'
 import { EMAIL_REGEX, PASSWORD_REGEX } from '../libs'
 import { Spinner } from '../assets'
 
@@ -14,7 +14,7 @@ const Signup = () => {
   const { clearError, error, loading, sendRequest } = useHttpRequest()
   const { inputs, handleChange, resetValues } = useFormInputs(initialState)
   const [inputError, setInputError] = useState(initialError)
-  const [isValid, setIsValid] = useState(true)
+  const navigate = useNavigate()
 
   const isMatch = (value, checker) => {
     if(value === checker) {
@@ -46,12 +46,14 @@ const Signup = () => {
     }
     const headers = { 'Content-Type': 'application/json' }
     const payload = { fullName, username, email, password }
-    console.log(payload)
     const data = await sendRequest(`${url}/auth/signup`, 'POST', JSON.stringify(payload), headers)
-    console.log(data)
+    if(!data || data === undefined) return
+    navigate('/signin')
   }
 
   return (
+    <>
+    {error && <Toast type='error' message={error} onClose={clearError} />}
     <div className='w-screen h-screen grid place-items-center bg-welcome bg-no-repeat bg-contain bg-center'>
       <div className='w-4/5 md:w-500 flex flex-col items-center bg-white bg-opacity-75 py-4'>
         <p className='text-2xl font-bold font-aboreto text-primary mt-2 mb-4'>Welcome!</p>
@@ -68,6 +70,7 @@ const Signup = () => {
         </p>
       </div>
     </div>
+    </>
   )
 }
 
