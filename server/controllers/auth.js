@@ -9,7 +9,7 @@ const signin = async(req, res, next) => {
     const { username, password } = req.body
 
     try {
-        const existingUser = await User.findOne({username})
+        const existingUser = await User.findOne({username}).select({ password: 0, __v: 0 })
         if(!existingUser) {
             return res.status(404).json({message: 'User not found, please try again.'})
         }    
@@ -17,8 +17,8 @@ const signin = async(req, res, next) => {
         if(validPassword) {
             const token = jwt.sign({ id: existingUser._id }, secret, { expiresIn: 86400 })
             req.session.token = token
-            const { id, fullName, username, email } = existingUser
-            res.status(200).json({message: 'Signin successful.', data: {id, fullName, username, email, token}})
+            const user = existingUser
+            res.status(200).json({message: 'Signin successful.', data: { user, token}})
         } else {
             return res.status(400).json({message: 'Invalid password, please try again.',})
         }

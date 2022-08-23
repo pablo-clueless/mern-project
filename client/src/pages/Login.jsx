@@ -48,7 +48,7 @@ const Login = () => {
     <>
     {error && <Toast type='error' message={error} onClose={clearError} />}
     <div className='w-screen h-screen grid place-items-center bg-login bg-no-repeat bg-contain bg-center'>
-      <div className='w-4/5 md:w-500 flex flex-col items-center bg-white bg-opacity-75 py-4'>
+      <div className='w-4/5 md:w-500 flex flex-col items-center bg-white dark:bg-gray-600 bg-opacity-75 dark:bg-opacity-75 rounded-md py-4'>
         <p className='text-2xl font-bold font-aboreto text-primary mt-2 mb-4'>Welcome back!</p>
         <form onSubmit={handleLogin} className='w-full flex flex-col items-center justify-center p-4'>
           <InputField label='Username' type='text' name='username' onChange={handleChange} placeholder='username' />

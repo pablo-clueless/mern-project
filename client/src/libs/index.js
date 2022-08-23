@@ -1,16 +1,10 @@
 
 export const saveToLocalStorage = (key, value) => {
-    localStorage.setItem(key, value)
+    localStorage.setItem(key, JSON.stringify(value))
 }
 
 export const retrieveFromLocalStorage = (key) => {
-    const jsonData = localStorage.getItem(key)
-    if(item) {
-        const data =JSON.parse(jsonData)
-        return data
-    } else {
-        return null
-    }
+    return JSON.parse(localStorage.getItem(key))
 }
 
 export const removeFromLocalStorage = (key) => {

@@ -4,7 +4,7 @@ const { getUserById, followUser, unfollowUser, editUser, deleteUser } = require(
 
 const router = express.Router()
 
-router.get('/getById/:id', getUserById)
+router.get('/get/:id', getUserById)
 
 router.get('/follow', followUser)
 

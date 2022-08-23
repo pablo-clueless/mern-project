@@ -30,16 +30,16 @@ const followUser = async(req, res, next) => {
 }
 
 const unfollowUser = async(req, res, next) => {
-
+    
 }
 
 const editUser = async(req, res, next) => {
     const { id } = req.params
-    const { fullName, image, bio, role, company, location } = req.body
-    const updates = { fullName, image, bio, role, company, location }
+    const { fullName, image, bio, role, company, location, url, github, linkedin, twitter } = req.body
+    const updates = { fullName, image, bio, role, company, location, url, github, linkedin, twitter }
 
     try {
-        let user = await User.findOne({_id: id})
+        let user = await User.findOne({_id: id}).select({ password: 0, __v: 0 })
         if(!user) {
             return res.status(404).json({message: 'User not found'})
         }
