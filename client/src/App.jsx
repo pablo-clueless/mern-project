@@ -17,9 +17,9 @@ const App = () => {
     setMode(mode)
   },[])
 
-  useEffect(() => {
-    isLoggedIn ? navigate('/') : navigate('/signin')
-  },[])
+  // useEffect(() => {
+  //   isLoggedIn ? navigate('/') : navigate('/signin')
+  // },[])
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>

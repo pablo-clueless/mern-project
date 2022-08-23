@@ -29,12 +29,18 @@ const Navbar = () => {
         )}
         {isLoggedIn && (
           <div className='hidden md:flex items-center'>
-            <div onClick={() => handleClick('notifications')} className='rounded-full p-4 text-xl text-secondary cursor-pointer hover:drop-shadow-xl'>
+            <div onClick={() => handleClick('notifications')} className='rounded-full p-4 text-xl text-secondary cursor-pointer hover:drop-shadow-xl relative'>
               <FiBell />
+              <div className='w-2 h-2 bg-blue-600 rounded-full absolute top-4 right-4'></div>
             </div>
             <div onClick={() => handleClick('profile')} className='rounded-full p-4 text-xl text-secondary cursor-pointer hover:drop-shadow-xl'>
               <FiUser />
             </div>
+          </div>
+        )}
+        {!isLoggedIn && (
+          <div onClick={() => handleClick('profile')} className='rounded-full p-4 text-xl text-secondary cursor-pointer hover:drop-shadow-xl'>
+            <FiUser />
           </div>
         )}
         <div className='block md:hidden'>

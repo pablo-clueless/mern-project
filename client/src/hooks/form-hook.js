@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react'
+import { useReducer } from 'react'
 
 const inputReducer = (state, action) => {
     switch (action.type) {
@@ -20,14 +20,12 @@ const inputReducer = (state, action) => {
 
 export const useFormInputs = (initialState) => {
     const [inputs, dispatch] = useReducer(inputReducer, initialState)
-    // const [isTouched, setIsTouched] = useState(false)
-    // const [isValid, setIsValid] = useState(false)
 
     const handleChange = (e) => {
         dispatch({type: 'change', name: [e.target.name], value: e.target.value})
     }
 
-    const resetValues = () => {
+    const resetValues = (e) => {
         dispatch({type: 'reset'})
     }
 
