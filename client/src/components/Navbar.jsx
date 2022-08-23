@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { FiBell, FiBook, FiMenu, FiMoon, FiSun, FiUser, FiX } from 'react-icons/fi'
 
 import { useStateContext } from '../contexts/ContextProvider'
+import { Searchbar } from './'
 
 const Navbar = () => {
   const { currentMode, setMode, activeMenu, setActiveMenu, handleClick } = useStateContext()
@@ -17,6 +18,8 @@ const Navbar = () => {
         </Link>
       </div>
 
+      <Searchbar />
+      
       <div className='flex items-center'>
         {currentMode === 'Dark' ? (
           <div onClick={() => setMode('Light')} className='rounded-full p-4 text-xl text-secondary cursor-pointer hover:drop-shadow-xl'>

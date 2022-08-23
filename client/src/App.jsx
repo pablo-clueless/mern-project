@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { useStateContext } from './contexts/ContextProvider'
-import {Home, Signup, Login, Profile, PasswordReset, EditUser } from './pages'
+import {Home, Signup, Login, Profile, PasswordReset, EditUser, PostById } from './pages'
 import { Navbar, Notifications, UserMenu } from './components'
 import { retrieveFromLocalStorage } from './libs'
 
@@ -24,7 +24,7 @@ const App = () => {
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <div className='bg-slate-200 dark:bg-slate-700 relative'>
-        <div className='w-full absolute top-0 left-0 bg-white dark:bg-gray-600 navbar'>
+        <div className='w-full fixed top-0 left-0 bg-white dark:bg-gray-600 navbar'>
           <Navbar />
         </div>
         <Suspense fallback={null}>
@@ -35,6 +35,7 @@ const App = () => {
             <Route path='/user/:username' element={<Profile />} />
             <Route path='/user/edit' element={<EditUser />} />
             <Route path='/reset-password' element={<PasswordReset />} />
+            <Route path='/posts/:id' element={<PostById />} />
           </Routes>
         </Suspense>
 

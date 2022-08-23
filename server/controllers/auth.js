@@ -9,7 +9,7 @@ const signin = async(req, res, next) => {
     const { username, password } = req.body
 
     try {
-        const existingUser = await User.findOne({username}).select({ password: 0, __v: 0 })
+        const existingUser = await User.findOne({username})
         if(!existingUser) {
             return res.status(404).json({message: 'User not found, please try again.'})
         }    
