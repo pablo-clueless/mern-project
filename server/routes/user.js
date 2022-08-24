@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { addComment, addProfilePicture, deleteComment, deleteOne, findOne, like, search, updateOne } = require('../controllers/user')
+const { addProfilePicture, deleteOne, findOne, follow, search, updateOne } = require('../controllers/user')
 const { verifyToken } = require('../middlewares/authJwt')
 const { upload } = require('../utils/uploader')
 
@@ -16,10 +16,6 @@ router.put('/edit/avatar/:id', [verifyToken, upload.single('image')], addProfile
 
 router.delete('/delete', deleteOne)
 
-router.post('/comment', verifyToken, addComment)
-
-router.delete('/comment', verifyToken, deleteComment)
-
-router.post('/like', verifyToken, like)
+router.post('/follow', verifyToken, follow)
 
 module.exports = router

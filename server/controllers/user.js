@@ -75,74 +75,31 @@ const deleteOne = async(req, res) => {
     }
 }
 
-const addComment = async(req, res) => {
-    const { userId, postId, comment } = req.body
+const follow = async (req, res) => {
+    const { follower, following, action } = req.body
 
     try {
-        const user = await User.findOne({ _id: userId })
-        if(!user) return res.status(404).json({message: 'User not found'})
-        user.posts.forEach((post) => {
-            if(post._id === postId) {
-                post.comments.push(comment.body)
-                user.notifications.push({
-                    message: `@${comment.by} commented on your post`,
-                    by: comment.by,
-                    time: new Date()
-                })
-                user.save((err) => {
-                    if(err) return res.status(500).json({message: 'Internal server error', err})
-                    return res.status(201).json({message: 'Comment added'})
-                })
-            }
-        })
+        switch(action) {
+            case 'follow': 
+                await Promise.all([
+                    User.findOneAndUpdate({_id: follower}, {$push: {following: following}}, {new: true}),
+                    User.findOneAndUpdate({_id: following}, {$push: {followers: follower}}, {new: true}),
+                ])
+                res.status(200).json({message: 'User followed'})
+                break;
+            case 'unfollow':
+                await Promise.all([
+                    User.findOneAndUpdate({_id: follower}, { $pull: {following: following}}, {new: true}),
+                    User.findOneAndUpdate({_id: following}, { $pull: {followers: follower}}, {new: true}),
+                ])
+                res.status(200).json({message: 'User unfollowed'})
+                break;
+            default:
+                break;
+        }
     } catch (error) {
         return res.status(500).json({message: 'Internal server error', error})
     }
 }
 
-const deleteComment = async(req, res) => {
-    const { userId, postId, commentId } = req.body
-
-    try {
-        const user = await User.findOne({_id: userId })
-        if(!user) return res.status(404).json({message: 'User not found'})
-        user.posts.forEach((post) => {
-            if(post._id === postId) {
-                post.comments.filter((comment) => comment._id === commentId)
-            }
-        })
-        await user.save((err => {
-            if(err) return res.status(500).json({message: 'Internal server error', err})
-            return res.status(200).json({message: 'Comment deleted'})
-        }))
-    } catch (error) {
-        return res.status(500).json({message: 'Internal server error', error})
-    }
-}
-
-const like = async(req, res) => {
-    const { userId, postId, like } = req.body
-
-    try {
-        const user = await User.findOne({ _id: userId })
-        if(!user) return res.status(404).json({message: 'User not found'})
-        user.posts.forEach((post) => {
-            if(post._id === postId) {
-                post.likes.push(like.by)
-                user.notifications.push({
-                    message: `@${like.by} liked your post`,
-                    by: like.by,
-                    time: new Date()
-                })
-                user.save((err) => {
-                    if(err) return res.status(500).json({message: 'Internal server error', err})
-                    return res.status(201).json({message: 'Post liked'})
-                })
-            }
-        })
-    } catch (error) {
-        return res.status(500).json({message: 'Internal server error', error})
-    }
-}
-
-module.exports = { addComment, addProfilePicture, deleteComment, deleteOne, findOne, like, search, updateOne }
+module.exports = { addProfilePicture, deleteOne, findOne, follow, search, updateOne }
