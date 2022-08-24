@@ -10,21 +10,12 @@ module.exports = {
     extend: {
       colors: {
         'primary': '#6C63FF',
-        'secondary': '#FF589B',
-        'light': '#F5EBFF',
-        'dark': '#484554',
       },
       backgroundColor: {
         'primary': '#6C63FF',
-        'secondary': '#FF589B',
-        'light': '#F5EBFF',
-        'dark': '#484554',
       },
       textColor: {
         'primary': '#6C63FF',
-        'secondary': '#FF589B',
-        'light': '#F5EBFF',
-        'dark': '#484554',
       },
       width: {
         100: '100px',
@@ -49,6 +40,7 @@ module.exports = {
         500: '500px',
         600: '600px',
         700: '700px',
+        90: '90%',
       },
       borderWidth: {
         'thin': '0.5px',

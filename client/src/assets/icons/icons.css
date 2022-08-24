@@ -3,8 +3,8 @@
 */
 .spinner {
     transform: rotate(90deg);
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
 }
   
 .spinner__path {
@@ -13,7 +13,7 @@
     stroke-width: 2;
     stroke: #FFF;
     fill: transparent;
-    animation: spinner 2s ease-in-out 0s normal forwards infinite;
+    animation: spinner 1.5s ease-in-out 0s normal forwards infinite;
 }
 
 @keyframes spinner {

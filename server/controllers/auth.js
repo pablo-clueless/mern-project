@@ -1,34 +1,43 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const validator = require('validator')
 
 const { User } = require('../schemas')
-const cloudinary = require('../cloudinary')
 const { secret } = require('../config/auth.config')
 
-const signin = async(req, res, next) => {
+const signin = async(req, res) => {
     const { username, password } = req.body
-
     try {
-        const existingUser = await User.findOne({username})
-        if(!existingUser) {
-            return res.status(404).json({message: 'User not found, please try again.'})
-        }    
-        const validPassword = await bcrypt.compare(password, existingUser.password)
-        if(validPassword) {
-            const token = jwt.sign({ id: existingUser._id }, secret, { expiresIn: 86400 })
-            req.session.token = token
-            const user = existingUser
-            res.status(200).json({message: 'Signin successful.', data: { user, token}})
-        } else {
-            return res.status(400).json({message: 'Invalid password, please try again.',})
-        }
+        const user = await User.findOne({username: username})
+        if(!user) return res.status(404).json({message: 'user not found'})
+        const isPasswordValid = bcrypt.compare(password, user.password)
+        if(!isPasswordValid) return res.status(400).json({message: 'Invalid password'})
+        const token = jwt.sign({ id: user._id}, secret, { expiresIn: 86400 })
+        req.session.token = token
+        return res.status(200).json({message: 'Signin successful', user, token })
     } catch (error) {
         return res.status(500).json({message: `Internal server error, couldn't verify user`, error})
     }
 }
 
-const signup = async(req, res, next) => {
+const signup = async(req, res) => {
     const { fullName, username, email, password } = req.body
+
+    if(validator.isEmpty(fullName) || validator.isAlphanumeric(username)) {
+        return res.status(400).json({message: 'Name is required'})
+    }
+
+    if(validator.isEmpty(username) || validator.isAlphanumeric(username)) {
+        return res.status(400).json({message: 'Username is empty or invalid'})
+    }
+
+    if(validator.isEmpty(email) || !validator.isEmail(email)) {
+        return res.status(400).json({message: 'Email is empty or invalid'})
+    }
+
+    if(validator.isEmpty(password) || !validator.isStrongPassword(password)) {
+        return res.status(400).json({message: 'Password is invalid'})
+    }
     
     try {
         let isUsernameInUse = await User.findOne({username})
@@ -45,13 +54,4 @@ const signup = async(req, res, next) => {
     }
 }
 
-const signout = async(req, res, next) => {
-    try {
-        req.session = null
-        return res.status(200).json({message: 'Signout successfull.'})
-    } catch (error) {
-        next(err)
-    }
-}
-
-module.exports = { signin, signup, signout }
+module.exports = { signin, signup }

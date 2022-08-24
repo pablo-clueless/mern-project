@@ -1,12 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Aboreto&family=Montserrat:wght@300;400;500&display=swap');
 
-/* :root {
+:root {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-} */
+}
 
 * {
   box-sizing: border-box;
@@ -50,13 +48,17 @@ input:-webkit-autofill {
 
 .nav-item,
 .navbar {
-  z-index: 10000;
+  z-index: 10 !important;
 }
 
 .toast {
-  z-index: 100000 !important;
+  z-index: 20 !important;
 }
 
 .backdrop {
-  z-index: 10000000 !important;
+  z-index: 30 !important;
+}
+
+.fallback {
+  z-index: 40 !important;
 }

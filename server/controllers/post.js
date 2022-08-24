@@ -1,15 +1,16 @@
-const { Post } = require('../schemas')
+const { Post, User } = require('../schemas')
+const validator = require('validator')
+const cloudinary = require('cloudinary').v2
 
-const getAllPosts = async(req, res) => {}
+const getAll = async(req, res) => {}
 
-const getPostByUser = async(req, res) => {}
+const findOne = async(req, res) => {}
 
-const getPostById = async(req, res) => {}
+const create = async(req, res) => {
+    const { body, createdBy } = req.body
+    const images = req.files
+}
 
-const addPost = async(req, res) => {}
+const remove = async(req, res) => {}
 
-const editPost = async(req, res) => {}
-
-const deletePost = async(req, res) => {}
-
-module.exports = { getAllPosts, getPostByUser, getPostById, addPost, editPost, deletePost }
+module.exports = { create, findOne, getAll, remove }

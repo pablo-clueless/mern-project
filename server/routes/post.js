@@ -1,21 +1,17 @@
 const express = require('express')
-const { ensureLoggedIn } = require('connect-ensure-login')
 
-const { getAllPosts, getPostById, getPostByUser, addPost, editPost, deletePost } = require('../controllers/post')
-const { verifyToken } = require('../middlewares/authJwt')
+const { create, findOne, getAll, remove} = require('../controllers/post')
+const { verifyToken } =  require('../middlewares/authJwt')
+const { upload } = require('../utils/uploader')
 
 const router = express.Router()
 
-router.get('/get-all', getAllPosts)
+// router.get('/get', getAll)
 
-router.get('/get-by-id/:id', [verifyToken, ensureLoggedIn()], getPostById)
+// router.get('/get/:id', findOne)
 
-router.get('/get-by-user/:userId', [verifyToken, ensureLoggedIn()], getPostByUser)
+router.post('/create', [verifyToken, upload.array('images')], create)
 
-router.post('/add', [verifyToken, ensureLoggedIn()], addPost)
-
-router.put('/edit/:id', [verifyToken, ensureLoggedIn()], editPost)
-
-router.delete('/delete/:id', [verifyToken, ensureLoggedIn()], deletePost)
+// router.delete('/delete/:id', verifyToken, remove)
 
 module.exports = router

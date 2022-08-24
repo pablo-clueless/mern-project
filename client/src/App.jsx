@@ -3,9 +3,9 @@ import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { useStateContext } from './contexts/ContextProvider'
-import {Home, Signup, Login, Profile, PasswordReset, EditUser, PostById } from './pages'
-import { Navbar, Notifications, UserMenu } from './components'
+import { Home, Signup, Login, Profile, PasswordReset, EditUser, PostById } from './pages'
 import { retrieveFromLocalStorage } from './libs'
+import { Fallback } from './components'
 
 const App = () => {
   const { currentMode, setMode, isClicked } = useStateContext()
@@ -17,17 +17,12 @@ const App = () => {
     setMode(mode)
   },[])
 
-  // useEffect(() => {
-  //   isLoggedIn ? navigate('/') : navigate('/signin')
-  // },[])
+  // TODO: implement login persistency
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <div className='bg-slate-200 dark:bg-slate-700 relative'>
-        <div className='w-full fixed top-0 left-0 bg-white dark:bg-gray-600 navbar'>
-          <Navbar />
-        </div>
-        <Suspense fallback={null}>
+        <Suspense fallback={<Fallback />}>
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/signup' element={<Signup />} />
@@ -38,9 +33,6 @@ const App = () => {
             <Route path='/posts/:id' element={<PostById />} />
           </Routes>
         </Suspense>
-
-        {isClicked.notifications && <Notifications />}
-        {isClicked.profile && <UserMenu />}
       </div>
     </div>
   )

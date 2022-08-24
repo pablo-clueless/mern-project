@@ -11,6 +11,9 @@
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage"
   },
+  "keywords": ["react", "social media", "mern", "fullstack"],
+  "author": "Samson Okunola <smsnmicheal@gmail.com, https://okunolasamson.dev>",
+  "license": "MIT",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
     "prop-types": "^15.8.1",

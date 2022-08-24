@@ -1,0 +1,35 @@
+// ! token to be appended to headers for all request as 'x-access-token'
+
+// comment body
+const body = JSON.stringify({
+    userId,
+    postId,
+    comments: { body, by }
+})
+
+// like body
+const body = JSON.stringify({
+    userId,
+    postId,
+    like: { by }
+})
+
+// signin body
+const body = JSON.stringify({
+    username,
+    password
+})
+
+// signup body
+const body = JSON.stringify({
+    fullName,
+    username,
+    email,
+    password
+})
+
+// post body
+const body = {
+    userId,
+    post: { body, image }
+}

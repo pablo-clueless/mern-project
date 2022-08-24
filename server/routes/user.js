@@ -1,17 +1,25 @@
 const express = require('express')
 
-const { getUserById, followUser, unfollowUser, editUser, deleteUser } = require('../controllers/user')
+const { addComment, addProfilePicture, deleteComment, deleteOne, findOne, like, search, updateOne } = require('../controllers/user')
+const { verifyToken } = require('../middlewares/authJwt')
+const { upload } = require('../utils/uploader')
 
 const router = express.Router()
 
-router.get('/get/:id', getUserById)
+router.get('/:id', findOne)
 
-router.get('/follow', followUser)
+router.get('/get/:query', search)
 
-// router.post('/unfollow', unfollowUser)
+router.put('/edit/:id', verifyToken, updateOne)
 
-router.put('/edit', editUser)
+router.put('/edit/avatar/:id', [verifyToken, upload.single('image')], addProfilePicture)
 
-router.delete('/delete', deleteUser)
+router.delete('/delete', deleteOne)
+
+router.post('/comment', verifyToken, addComment)
+
+router.delete('/comment', verifyToken, deleteComment)
+
+router.post('/like', verifyToken, like)
 
 module.exports = router
