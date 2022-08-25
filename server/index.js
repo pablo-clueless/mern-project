@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const cloudinary = require('cloudinary').v2
+const morgan =  require('morgan')
 
 const { User } = require('./schemas')
 const { upload } = require('./utils/uploader')
@@ -29,6 +30,7 @@ app.use(passport.session())
 passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
+morgan('tiny')
 
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
