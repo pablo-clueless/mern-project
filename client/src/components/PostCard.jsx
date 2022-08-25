@@ -1,20 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FiHeart, FiMessageSquare, FiShare } from 'react-icons/fi'
+import { FiHeart, FiMessageSquare } from 'react-icons/fi'
 
-const PostCard = ({id, body, createdBy, creatorImage, createdOn, image, likes, shares, comments}) => {
+const PostCard = ({id, body, createdBy, createdOn, image, likes, comments}) => {
   return (
     <div className='w-90 md:w-700 flex flex-col items-center bg-white dark:bg-slate-500 rounded-md px-3 py-2'>
-        <div className='w-full flex items-center gap-3 mb-2'>
-            <Link to={`/user/${createdBy}`} className='w-12 h-12 rounded-full'>
-                <img src={creatorImage} alt={createdBy} className='w-full h-full rounded-full object-cover' />
+        <div className='flex flex-col items-start'>
+            <Link to={`/user/${createdBy}`} className='text-lg text-slate-800 dark:text-white'>
+                @{createdBy}
             </Link>
-            <div className='flex flex-col items-start'>
-                <Link to={`/user/${createdBy}`} className='text-lg text-slate-800 dark:text-white'>
-                    @{createdBy}
-                </Link>
-                <p className='text-xs text-slate-400'>{createdOn}</p>
-            </div>
+            <p className='text-xs text-slate-400'>{createdOn}</p>
         </div>
         <Link to={`/posts/${id}`} className='w-full flex flex-col border-t-thin border-slate-400'>
             <p className='my-2 p-3 text-slate-500 dark:text-white'>{body}</p>
@@ -30,9 +25,6 @@ const PostCard = ({id, body, createdBy, creatorImage, createdOn, image, likes, s
             </div>
             <div className='flex items-center gap-1'>
                 <FiMessageSquare /> {comments.length}
-            </div>
-            <div className='flex items-center gap-1'>
-                <FiShare /> {shares}
             </div>
         </div>
     </div>

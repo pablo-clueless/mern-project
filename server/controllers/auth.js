@@ -36,7 +36,7 @@ const signup = async(req, res) => {
     }
 
     if(validator.isEmpty(password) || !validator.isStrongPassword(password)) {
-        return res.status(400).json({message: 'Password is invalid'})
+        return res.status(400).json({message: 'Password is invalid or not strong enough'})
     }
     
     try {

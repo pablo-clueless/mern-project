@@ -26,9 +26,11 @@ const findOne = async(req, res) => {
 
 const create = async(req, res) => {
     const { body, createdBy } = req.body
-    if(validator.isEmpty(body)) return res.status(400).json({message: 'Post body cannot be empty'})
     let image = req?.file?.path
     let imageUrl
+
+    if(body === '' || !image) return res.status(400).json({message: 'Post body cannot be empty'})
+
     try {
         if(image) {
             const result = await cloudinary.uploader.upload(image, {folder: 'post-images'})
@@ -38,7 +40,7 @@ const create = async(req, res) => {
 
         const user = await User.findOne({_id: createdBy})
         if(!user) return res.status(404).json({message: 'User not found'})
-        const post = new Post({body, image: imageUrl, createdBy: user._id})
+        const post = new Post({body, image: imageUrl, createdBy: user })
         post.save((err, post) => {
             if(err) return res.status(500).json({message: 'An error occurred while saving the post', err})
             const updateUser = user.update({$push: {posts: post._id}}, {new: true})
