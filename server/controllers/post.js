@@ -65,17 +65,14 @@ const comment = async(req, res) => {
     const { by, postId, comment, commentId, action } = req.body
     const updates = { by, comment }
     try {
-        switch(action) {
-            case 'add-comment':
-                await Post.findOneAndUpdate({_id: postId}, {$push: {comments: updates}}, {new: true}, (err) => {
-                    if(err) return res.status(400).json({message: 'Unable to add comment', err})
-                    return res.status(201).json({message: 'Comment added'})
-                })
-            case 'remove-comment':
-                await Post.findOneAndUpdate({_id: postId}, {$pull: {comments: {_id: commentId}}}, {new: true}, (err) => {
-                    if(err) return res.status(400).json({message: 'Unable to remove comment', err})
-                    return res.status(200).json({message: 'Comment removed'})
-                })
+        if(action === 'add-comment') {
+            const updatedPost = await Post.findOneAndUpdate({_id: postId}, {$push: {comments: updates}}, {new: true})
+            if(!updatedPost) return res.status(400).json({message: 'Unable to add comment'})
+            return res.status(201).json({message: 'comment added'})
+        } else {
+            const updatedPost = await Post.findOneAndUpdate({_id: postId}, {$pull: {comments: {_id: commentId}}}, {new: true})
+            if(!updatedPost) return res.status(400).json({message: 'Unable to remove comment'})
+            return res.status(201).json({message: 'comment removed'})
         }
     } catch (error) {
         return res.status(500).json({message: 'Internal server error', error})
