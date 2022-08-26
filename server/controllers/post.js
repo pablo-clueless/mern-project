@@ -40,13 +40,10 @@ const create = async(req, res) => {
 
         const user = await User.findOne({_id: createdBy})
         if(!user) return res.status(404).json({message: 'User not found'})
-        const post = new Post({body, image: imageUrl, createdBy: user })
-        post.save((err, post) => {
-            if(err) return res.status(500).json({message: 'An error occurred while saving the post', err})
-            const updateUser = user.update({$push: {posts: post._id}}, {new: true})
-            if(!updateUser) return res.status(500).json({message: 'An error occurred while saving the post', err})
-            return res.status(201).json({message: 'Post added'})
-        })
+        const newPost = new Post({body, image: imageUrl, createdBy: user})
+        const post  = await newPost.save()
+        if(!post) return res.status(400).json({message: 'Unable to add post'})
+        return res.status(201).json({message: 'Post saved'})
     } catch (error) {
         return res.status(500).json({message: 'Internal server error', error})
     }
@@ -65,15 +62,20 @@ const remove = async(req, res) => {
 }
 
 const comment = async(req, res) => {
-    const { by, postId, comment, action } = req.body
-    const updates = { comment, by }
-
+    const { by, postId, comment, commentId, action } = req.body
+    const updates = { by, comment }
     try {
         switch(action) {
             case 'add-comment':
-                await Post.findOneAndUpdate({_id: postId}, {$push: {}}, {new: true}, (err) => {})
+                await Post.findOneAndUpdate({_id: postId}, {$push: {comments: updates}}, {new: true}, (err) => {
+                    if(err) return res.status(400).json({message: 'Unable to add comment', err})
+                    return res.status(201).json({message: 'Comment added'})
+                })
             case 'remove-comment':
-                await Post.findOneAndUpdate({_id: postId}, {$pull: {}}, {new: true}, (err) => {})
+                await Post.findOneAndUpdate({_id: postId}, {$pull: {comments: {_id: commentId}}}, {new: true}, (err) => {
+                    if(err) return res.status(400).json({message: 'Unable to remove comment', err})
+                    return res.status(200).json({message: 'Comment removed'})
+                })
         }
     } catch (error) {
         return res.status(500).json({message: 'Internal server error', error})
