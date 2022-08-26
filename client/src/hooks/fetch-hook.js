@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 export const useHttpRequest = () => {
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
+    const [httpError, setHttpError] = useState(null)
 
     const activeHttpRequests = useRef([])
 
@@ -25,12 +25,12 @@ export const useHttpRequest = () => {
             setLoading(false)
             return data
         } catch (error) {
-            setError(error.message)
+            setHttpError(error.message)
             setLoading(false)
         }
     },[])
 
-    const clearError = () => setError(null)
+    const clearError = () => setHttpError(null)
 
     useEffect(() => {
         return () => activeHttpRequests.current.forEach(abortCtrl => {
@@ -38,5 +38,5 @@ export const useHttpRequest = () => {
         )
     },[])
 
-    return { loading, error, clearError, sendRequest }
+    return { loading, httpError, clearError, sendRequest }
 }

@@ -14,7 +14,7 @@ const signin = async(req, res) => {
         if(!isPasswordValid) return res.status(400).json({message: 'Invalid password'})
         const token = jwt.sign({ id: user._id}, secret, { expiresIn: 86400 })
         req.session.token = token
-        return res.status(200).json({message: 'Signin successful', user, token })
+        return res.status(200).json({message: 'Signin successful'}, user, token)
     } catch (error) {
         return res.status(500).json({message: `Internal server error, couldn't verify user`, error})
     }
@@ -54,4 +54,6 @@ const signup = async(req, res) => {
     }
 }
 
-module.exports = { signin, signup }
+const resetPassword = async(req, res) => {}
+
+module.exports = { resetPassword, signin, signup }

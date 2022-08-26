@@ -4,7 +4,7 @@ const url = import.meta.env.VITE_URL
 
 const initialState = {
     posts: [],
-    loading: false,
+    isLoading: false,
     error: null,
 }
 
@@ -28,14 +28,14 @@ const postSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getAllPosts.pending, (state) => {
-            state.loading = true
+            state.isLoading = true
         }),
         builder.addCase(getAllPosts.fulfilled, (state, action) => {
-            state.loading = false
+            state.isLoading = false
             state.posts = action.payload
         }),
         builder.addCase(getAllPosts.rejected, (state, action) => {
-            state.loading = false
+            state.isLoading = false
             state.error = action.payload
         })
     }

@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -14,6 +14,10 @@ const App = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  // ! socket.io test
+
+  // TODO: implement login persistency
+
   useEffect(() => {
     const mode = retrieveFromLocalStorage('mode')
     setMode(mode)
@@ -22,8 +26,6 @@ const App = () => {
   useEffect(() => {
     dispatch(getAllPosts())
   },[])
-
-  // TODO: implement login persistency
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>

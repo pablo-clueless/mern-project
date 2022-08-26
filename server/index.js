@@ -1,30 +1,33 @@
 const express = require('express')
+const http = require('http')
+
+const app = express()
+const server = http.createServer(app)
+const { Server } = require('socket.io')
+const io = new Server(server, {
+    cors: {
+        origin: ['http://127.0.0.1:5173','http://localhost:5173'],
+    }
+})
+
 const cors = require('cors')
 const mongoose = require('mongoose')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
-const cloudinary = require('cloudinary').v2
 const morgan =  require('morgan')
 
 const { User } = require('./schemas')
-const { upload } = require('./utils/uploader')
 const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/user')
 const postRoutes = require('./routes/post')
+const { sessionMiddleWare } = require('./middlewares/session')
 
 require('dotenv').config()
-
-const app = express()
 
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(require('cookie-session')({
-    name: 'auth-token',
-    secret: process.env.SECRET,
-    httpOnly: true,
-    secure: true,
-}))
+app.use(sessionMiddleWare)
 app.use(passport.initialize())
 app.use(passport.session())
 passport.use(new LocalStrategy(User.authenticate()))
@@ -42,19 +45,24 @@ db.on('error', console.error.bind(console, 'Connection error: '))
 
 app.get('/', (req,res) => res.status(200).json({message: `Welcome to Developer's Hub`}))
 
-app.post('/', upload.single('image'), async(req, res) => {
-    const image = req.file.path
-    try {
-        const result = await cloudinary.uploader.upload(image, { folder: 'test-images' })
-        if(!result) return res.status(400).json({message: 'Unable to upload image'})
-        return res.status(202).json({message: 'Image uploaded', data: result})
-    } catch (error) {
-        return res.status(500).json({message: 'Internal server error', error})
-    }
+const wrap = middleWare => (socket, next) => middleWare(socket.request, {}, next)
+io.use(wrap(sessionMiddleWare))
+
+// io.use((socket, next) => {
+//     const session = socket.request.session
+//     if(session && session.authenticated) {
+//         next()
+//     } else {
+//         next(new Error('Not authorized'))
+//     }
+// })
+
+io.on('connection', (socket) => {
+    console.log(`url: ${socket.handshake.url}`)
 })
 
 app.use('/auth', authRoutes)
 app.use('/user', userRoutes)
 app.use('/post', postRoutes)
 
-app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`))
+server.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`))
