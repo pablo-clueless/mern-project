@@ -8,13 +8,19 @@ const initialState = { notifications: false, profile: false }
 
 export const ContextProvider = ({children}) => {
     const [currentMode, setCurrentMode] = useState('Light')
-    const [activeMenu, setActiveMenu] = useState(true)
+    const [currentColor, setCurrentColor] = useState('')
+    const [activeMenu, setActiveMenu] = useState(false)
     const [screenSize, setScreenSize] = useState(undefined)
     const [isClicked, setIsClicked] = useState(initialState)
 
     const setMode = (mode) => {
         setCurrentMode(mode)
         saveToLocalStorage('mode', mode)
+    }
+
+    const setColor = (color) => {
+        setCurrentColor(color)
+        saveToLocalStorage('color', color)
     }
 
     const handleClick = (clicked) => {
@@ -26,7 +32,7 @@ export const ContextProvider = ({children}) => {
     }
 
     return (
-        <StateContext.Provider value={{activeMenu, setActiveMenu, currentMode, setMode, screenSize, setScreenSize, isClicked, handleClick, handleUnclick}}>
+        <StateContext.Provider value={{activeMenu, setActiveMenu, currentMode, setMode, currentColor, setColor, screenSize, setScreenSize, isClicked, handleClick, handleUnclick}}>
             {children}
         </StateContext.Provider>
     )

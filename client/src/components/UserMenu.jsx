@@ -8,7 +8,6 @@ import { useStateContext } from '../contexts/ContextProvider'
 import { logout} from '../store/features/authSlice'
 import { useHttpRequest } from '../hooks'
 import { Modal, Toast } from './'
-import { DUMMY_USER } from '../dummy-user'
 
 const url = import.meta.env.VITE_URL
 
@@ -65,29 +64,29 @@ const UserMenu = () => {
           <div className='w-full h-full flex flex-col'>
             <div className='w-full flex items-center justify-between p-2'>
               <div className='rounded-full h-16 w-16'>
-                <img src={DUMMY_USER.image} alt={DUMMY_USER.username} className='w-full h-full rounded-full object-cover' />
+                <img src={user?.image} alt={user?.username} className='w-full h-full rounded-full object-cover' />
               </div>
               <div>
-                <p className='font-semibold text-lg text-primary'>{DUMMY_USER.fullName}</p>
-                <p className='font-light text-sm text-slate-500'>@{DUMMY_USER.username}</p>
+                <p className='font-semibold text-lg text-primary'>{user?.fullName}</p>
+                <p className='font-light text-sm text-slate-500'>@{user?.username}</p>
               </div>
             </div>
             <div className='w-full flex items-center justify-center gap-4 my-2'>
-              <a href={DUMMY_USER.url} target='_blank' rel='noopener noreferrer' className='rounded-full text-slate-500'>
+              <a href={user?.url} target='_blank' rel='noopener noreferrer' className='rounded-full text-slate-500'>
                 <FiGlobe />
               </a>
-              <a href={DUMMY_USER.github} target='_blank' rel='noopener noreferrer' className='rounded-full text-slate-500'>
+              <a href={user?.github} target='_blank' rel='noopener noreferrer' className='rounded-full text-slate-500'>
                 <FiGithub />
               </a>
-              <a href={DUMMY_USER.linkedin} target='_blank' rel='noopener noreferrer' className='rounded-full text-slate-500'>
+              <a href={user?.linkedin} target='_blank' rel='noopener noreferrer' className='rounded-full text-slate-500'>
                 <FiLinkedin />
               </a>
-              <a href={DUMMY_USER.twitter} target='_blank' rel='noopener noreferrer' className='rounded-full text-slate-500'>
+              <a href={user?.twitter} target='_blank' rel='noopener noreferrer' className='rounded-full text-slate-500'>
                 <FiTwitter />
               </a>
             </div>
             <div className='w-full flex flex-col px-5 mt-4 gap-2'>
-              <Link className='text-slate-500 hover:text-primary hover:font-medium' to={`/user/${DUMMY_USER.username}`}>
+              <Link className='text-slate-500 hover:text-primary hover:font-medium' to={`/user/${user?.username}`}>
                 Profile
               </Link>
               <Link className='text-slate-500 hover:text-primary hover:font-medium' to={`/settings`}>

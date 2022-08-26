@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Aboreto&family=Montserrat:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 :root {
   font-synthesis: none;
@@ -17,7 +17,7 @@ html {
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   overflow-x: hidden;
 }
 
@@ -43,7 +43,13 @@ input:-webkit-autofill {
 }
 
 .sidebar {
-  box-shadow: rgb(113 122 131 / 11%) 0px 7px 30px 0px;
+  box-shadow: rgb(113 122 131 / 5%) 0px 7px 30px 0px;
+}
+
+.sidebar-mobile {
+  box-shadow: rgb(113 122 131 / 5%) 0px 7px 30px 0px;
+  z-index: 15 !important;
+  height: 100vh;
 }
 
 .nav-item,

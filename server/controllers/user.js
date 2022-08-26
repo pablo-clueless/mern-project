@@ -8,7 +8,7 @@ const search = async(req, res) => {
     try {
         const data = await User.find({'$match': { 'username': { '$regex': query, '$options': 'i'}}})
         if(!data) return res.status(404).json({message: 'User not found'})
-        return res.status(200).json({message: 'User(s) found'}, data)
+        return res.status(200).json({message: 'User(s) found', data})
     } catch (error) {
         return res.status(500).json({message: 'Internal server error', error})
     }

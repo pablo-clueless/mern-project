@@ -4,8 +4,8 @@ module.exports = {
   darkMode: 'class',
   theme: {
     fontFamily: {
-      'aboreto': ['Aboreto', 'cursive'],
-      'monty': ['Montserrat', 'sans-serif'],
+      'grotesk': ['Space Grotesk', 'sans-serif'],
+      'inter': ['Inter', 'sans-serif'],
     },
     extend: {
       colors: {

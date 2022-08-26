@@ -7,6 +7,8 @@ const { Server } = require('socket.io')
 const io = new Server(server, {
     cors: {
         origin: ['http://127.0.0.1:5173','http://localhost:5173'],
+        // TODO: Add 'x-access-token' for logged in user
+        // allowedHeaders: ['x-access-token']
     }
 })
 
@@ -40,7 +42,7 @@ mongoose.connect(process.env.MONGO_URI, {
     useUnifiedTopology: true,
 })
 const db = mongoose.connection
-db.once('open', () => console.log('DB connection successful'))
+db.once('open', () => console.log('Successfully connected to MongoDB'))
 db.on('error', console.error.bind(console, 'Connection error: '))
 
 app.get('/', (req,res) => res.status(200).json({message: `Welcome to Developer's Hub`}))
@@ -58,7 +60,7 @@ io.use(wrap(sessionMiddleWare))
 // })
 
 io.on('connection', (socket) => {
-    console.log(`url: ${socket.handshake.url}`)
+    console.log(`url: ${socket.handshake.url} ${new Date().toLocaleString()}`)
 })
 
 app.use('/auth', authRoutes)

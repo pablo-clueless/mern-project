@@ -1,22 +1,20 @@
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, useContext, useEffect, useState } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Home, Signup, Login, Profile, PasswordReset, EditUser, PostById } from './pages'
+import { Home, Signup, Login, Profile, PasswordReset, PostById, Settings } from './pages'
 import { useStateContext } from './contexts/ContextProvider'
+import { SocketContext } from './contexts/SocketProvider'
 import { getAllPosts } from './store/features/postSlice'
 import { retrieveFromLocalStorage } from './libs'
-import { Fallback } from './components'
+import { Fallback, Navbar, Sidebar } from './components'
 
 const App = () => {
-  const { currentMode, setMode, isClicked } = useStateContext()
+  const { currentMode, setMode, activeMenu, isClicked } = useStateContext()
   const { isLoggedIn } = useSelector(store => store.auth)
+  const socket = useContext(SocketContext)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
-  // ! socket.io test
-
-  // TODO: implement login persistency
 
   useEffect(() => {
     const mode = retrieveFromLocalStorage('mode')
@@ -29,18 +27,26 @@ const App = () => {
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
-      <div className='bg-slate-50 dark:bg-slate-700 relative'>
-        <Suspense fallback={<Fallback />}>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/signup' element={<Signup />} />
-            <Route path='/signin' element={<Login />} />
-            <Route path='/user/:id' element={<Profile />} />
-            <Route path='/user/edit' element={<EditUser />} />
-            <Route path='/reset-password' element={<PasswordReset />} />
-            <Route path='/posts/:id' element={<PostById />} />
-          </Routes>
-        </Suspense>
+      <div className='bg-white dark:bg-slate-700 relative'>
+        <div className='w-full fixed md:static top-0 left-0 navbar'>
+          <Navbar />
+        </div>
+        <div className={`absolute top-0  bg-white dark:bg-slate-700 sidebar-mobile ${activeMenu ? 'left-0' : '-left-full'} transition-all duration-300`}>
+          <Sidebar />
+        </div>
+        <div>
+          <Suspense fallback={<Fallback />}>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/signup' element={<Signup />} />
+              <Route path='/signin' element={<Login />} />
+              <Route path='/user/:id' element={<Profile />} />
+              <Route path='/reset-password' element={<PasswordReset />} />
+              <Route path='/posts/:id' element={<PostById />} />
+              <Route path='/settings' element={<Settings />} />
+            </Routes>
+          </Suspense>
+        </div>
       </div>
     </div>
   )
