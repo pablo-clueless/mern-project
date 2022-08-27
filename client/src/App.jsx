@@ -1,20 +1,40 @@
-import React, { Suspense, useContext, useEffect, useState } from 'react'
-import { Routes, Route, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { Suspense, useContext, useEffect } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import Cookies from 'universal-cookie'
 
 import {  Home, Login, PasswordReset, Post, PrivacyPolicy, Profile, Settings, Signup } from './pages'
+import { CookieCard, Fallback, Navbar, Sidebar } from './components'
 import { useStateContext } from './contexts/ContextProvider'
 import { SocketContext } from './contexts/SocketProvider'
 import { getAllPosts } from './store/features/postSlice'
 import { retrieveFromLocalStorage } from './libs'
-import { CookieCard, Fallback, Navbar, Sidebar } from './components'
+
+const url = import.meta.env.VITE_URL
 
 const App = () => {
   const { currentMode, setMode, activeMenu, isClicked } = useStateContext()
-  const { isLoggedIn } = useSelector(store => store.auth)
   const socket = useContext(SocketContext)
-  const navigate = useNavigate()
   const dispatch = useDispatch()
+  const cookies = new Cookies()
+  const token = cookies.get('token')
+  const id = cookies.get('devUserId')
+
+  // const persistSignin = async() => {
+  //   if(token && id) {
+  //     const headers = { 'Content-Type': 'application/json', 'x-access-token': token }
+  //     const res = await fetch(`${url}/signin/auto`, {
+  //       method: 'POST',
+  //       body: JSON.stringify({id}),
+  //       headers })
+  //     const data = await res.json()
+  //     console.log(data)
+  //   }
+  // }
+  
+  // useEffect(() => {
+  //   persistSignin()
+  // },[])
 
   useEffect(() => {
     const mode = retrieveFromLocalStorage('mode')

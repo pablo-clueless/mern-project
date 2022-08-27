@@ -33,6 +33,7 @@ const Login = () => {
     if(!data || data === undefined) return
     const { token, user } = data
     cookies.set('token', token)
+    cookies.set('devUserId', user._id)
     dispatch(login(user))
     navigate('/')
   }
@@ -44,7 +45,7 @@ const Login = () => {
       <div className='w-90 md:w-500 flex flex-col items-center bg-white dark:bg-slate-700 bg-opacity-75 py-4 rounded-md'>
         <p className='text-3xl font-semibold text-primary mb-8'>Welcome Back</p>
         {/* TODO: Implement Google and Github OAuth */}
-        <div className='flex flex-col items-center mt-4 mb-8'>
+        <div className='flex items-center gap-4 mt-4 mb-8'>
           <Button type='button' label='Signin with Google' icon={<FaGoogle/>} onClick={() => {}} disabled />
           <Button type='button' label='Signin with Github' icon={<FaGithub/>} onClick={() => {}} disabled />
         </div>

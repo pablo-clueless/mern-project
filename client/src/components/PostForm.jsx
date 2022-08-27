@@ -15,11 +15,11 @@ const PostForm = () => {
     const [previewURL, setPreviewURL] = useState(null)
     const [message, setMessage] = useState('')
     const [image, setImage] = useState(null)
-    const { isLoggedIn } = useSelector(store => store.auth)
+    const { user, isLoggedIn } = useSelector(store => store.auth)
     const navigate = useNavigate()
     const cookies = new Cookies()
     const token = cookies.get('token')
-    const id = cookies.get('id')
+    const id = user._id
 
     const filePicker = (e) => {
         let file = e.target?.files[0]
@@ -36,22 +36,21 @@ const PostForm = () => {
         e.preventDefault()
         
         if(!isLoggedIn) return navigate('/signin')
-
-        if((!message && image) || (message && !image)) {
-            const formData = new FormData()
-            formData.append('body', message)
-            formData.append('image', image)
-            formData.append('createdBy', id)
-            const headers = {
-                'Content-Type': 'multipart/form-data',
-                'x-access-token': token
-            }
-            const data = await sendRequest(`${url}/post/create`, 'POST', formData, headers)
-            if(!data || data === undefined) return
-        } else return alert('Post cannot be empty')
+        if(!message && !image) return alert('Post cannot be empty')
+        const formData = new FormData()
+        formData.append('body', message)
+        formData.append('image', image)
+        formData.append('createdBy', id)
+        const headers = { 'x-access-token': token }
+        const data = await sendRequest(`${url}/post/create`, 'POST', formData, headers)
+        if(!data || data === undefined) return
+        window.location.reload()
     }
 
-    const clearPreviewURL = () => setPreviewURL(null)
+    const clearPreviewURL = () => {
+        setImage(null)
+        setPreviewURL(null)
+    }
 
   return (
     <>

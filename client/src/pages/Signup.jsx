@@ -24,7 +24,7 @@ const Signup = () => {
     if(!PASSWORD_REGEX.test(password)) return alert('Password is invalid')
     if(!MATCH_CHECKER(password, confirm_password)) return alert('Password do not match')
 
-    const payload = JSON.stringify({ fullName, email, username, password })
+    const payload = { fullName, email, username, password }
     const headers = { 'Content-Type': 'application/json' }
     const data = await sendRequest(`${url}/auth/signup`, 'POST', JSON.stringify(payload), headers)
     if(!data || data === undefined) return

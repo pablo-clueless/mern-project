@@ -1,12 +1,15 @@
 const express = require('express')
 
-const { resetPassword, signin, signup } = require('../controllers/auth')
+const { autoSignin, resetPassword, signin, signup } = require('../controllers/auth')
+const { verifyToken } = require('../middlewares/authJwt')
 
 const router = express.Router()
 
 router.post('/signup', signup)
 
 router.post('/signin', signin)
+
+router.post('/signin/auto', [verifyToken], autoSignin)
 
 router.post('/reset-password', resetPassword)
 

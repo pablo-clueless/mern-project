@@ -60,7 +60,4 @@ const IconButton = ({icon, onClick}) => {
   )
 }
 
-// TODO: implement user button with image
-// const User = () => {}
-
 export default Navbar

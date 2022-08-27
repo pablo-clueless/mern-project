@@ -7,7 +7,6 @@ const { secret } = require('../config/auth.config')
 
 const signin = async(req, res) => {
     const { username, password } = req.body
-    console.log(req.body)
     
     try {
         const user = await User.findOne({username: username})
@@ -24,7 +23,6 @@ const signin = async(req, res) => {
 
 const signup = async(req, res) => {
     const { fullName, username, email, password } = req.body
-    console.log(req.body)
 
     if(!fullName) {
         return res.status(400).json({message: 'Name is required'})
@@ -57,6 +55,13 @@ const signup = async(req, res) => {
     }
 }
 
+const autoSignin = async(req, res) => {
+    const { id } = req.body
+    const user = await User.findOne({_id: id})
+    if(!user) return res.status(404).json({message: 'Error logging you in, try logging in manually'})
+    return res.send(user)
+}
+
 const resetPassword = async(req, res) => {}
 
-module.exports = { resetPassword, signin, signup }
+module.exports = { autoSignin, resetPassword, signin, signup }
