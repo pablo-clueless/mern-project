@@ -6,7 +6,7 @@ export const useHttpRequest = () => {
 
     const activeHttpRequests = useRef([])
 
-    const sendRequest = useCallback(async(url, method = 'GET', body = null, headers = {}) => {
+    const sendRequest = useCallback(async(url, method = 'GET', body, headers = {}) => {
         setLoading(true)
         const httpAbortCtrl = new AbortController()
         activeHttpRequests.current.push(httpAbortCtrl)
@@ -14,7 +14,7 @@ export const useHttpRequest = () => {
         try {
             const response = await fetch(url, {
                 method,
-                body: JSON.stringify(body),
+                body,
                 headers,
                 signal: httpAbortCtrl.signal
             })

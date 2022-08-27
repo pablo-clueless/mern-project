@@ -11,7 +11,7 @@ const Button = ({type, label, icon, onClick, variant, disabled}) => {
     }
 
   return (
-    <button id='button' type={type} onClick={onClick} className='flex items-center gap-2 px-4 py-2 my-2 border-thin bg-primary text-white hover:bg-white hover:text-primary hover:border-primary transition-all duration-500 disabled:bg-gray-400 disabled:text-black disabled:border-gray-400 disabled:cursor-not-allowed' disabled={disabled}>
+    <button id='button' type={type} onClick={onClick} className='flex items-center gap-2 px-4 py-2 my-2 border-thin border-primary bg-primary text-white hover:bg-white hover:text-primary transition-all duration-500 disabled:bg-gray-400 disabled:text-black disabled:border-gray-400 disabled:cursor-not-allowed' disabled={disabled}>
         {label} {icon}        
     </button>
   )

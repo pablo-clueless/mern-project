@@ -1,12 +1,18 @@
 # Welcome to Developers' Hub
 
-Built with :heart:
-
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![Socket.io](https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101) 
 ## Features
+
+### Done
 - Signup and signin
+- Update user details
 - Search for users
+
+### In view
 - Realtime chat
+- Multiple picture upload
+- Video upload
+- Emoji support
 
 ## Author(s)
 
@@ -17,7 +23,7 @@ Built with :heart:
 
 ## License
 
-(The MIT License)
+The MIT License :balance_scale:
 
 Copyright (c) 2022 Samson Okunola [](mailto:smsnmicheal@gmail.com)
 

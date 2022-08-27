@@ -1,12 +1,14 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const validator = require('validator')
+const { EMAIL_REGEX, PASSWORD_REGEX } = require('../utils/validators')
 
 const { User } = require('../schemas')
 const { secret } = require('../config/auth.config')
 
 const signin = async(req, res) => {
     const { username, password } = req.body
+    console.log(req.body)
+    
     try {
         const user = await User.findOne({username: username})
         if(!user) return res.status(404).json({message: 'user not found'})
@@ -22,20 +24,21 @@ const signin = async(req, res) => {
 
 const signup = async(req, res) => {
     const { fullName, username, email, password } = req.body
+    console.log(req.body)
 
-    if(validator.isEmpty(fullName) || validator.isAlphanumeric(username)) {
+    if(!fullName) {
         return res.status(400).json({message: 'Name is required'})
     }
 
-    if(validator.isEmpty(username) || validator.isAlphanumeric(username)) {
+    if(!username) {
         return res.status(400).json({message: 'Username is empty or invalid'})
     }
 
-    if(validator.isEmpty(email) || !validator.isEmail(email)) {
+    if(!email || !EMAIL_REGEX.test(email)) {
         return res.status(400).json({message: 'Email is empty or invalid'})
     }
 
-    if(validator.isEmpty(password) || !validator.isStrongPassword(password)) {
+    if(!password || !PASSWORD_REGEX.test(password)) {
         return res.status(400).json({message: 'Password is invalid or not strong enough'})
     }
     
