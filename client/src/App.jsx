@@ -2,12 +2,12 @@ import React, { Suspense, useContext, useEffect, useState } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Home, Signup, Login, Profile, PasswordReset, PostById, Settings } from './pages'
+import {  Home, Login, PasswordReset, Post, PrivacyPolicy, Profile, Settings, Signup } from './pages'
 import { useStateContext } from './contexts/ContextProvider'
 import { SocketContext } from './contexts/SocketProvider'
 import { getAllPosts } from './store/features/postSlice'
 import { retrieveFromLocalStorage } from './libs'
-import { Fallback, Navbar, Sidebar } from './components'
+import { CookieCard, Fallback, Navbar, Sidebar } from './components'
 
 const App = () => {
   const { currentMode, setMode, activeMenu, isClicked } = useStateContext()
@@ -34,6 +34,7 @@ const App = () => {
         <div className={`absolute top-0  bg-white dark:bg-slate-700 sidebar-mobile ${activeMenu ? 'left-0' : '-left-full'} transition-all duration-300`}>
           <Sidebar />
         </div>
+        {/* <CookieCard /> */}
         <div>
           <Suspense fallback={<Fallback />}>
             <Routes>
@@ -42,8 +43,9 @@ const App = () => {
               <Route path='/signin' element={<Login />} />
               <Route path='/user/:id' element={<Profile />} />
               <Route path='/reset-password' element={<PasswordReset />} />
-              <Route path='/posts/:id' element={<PostById />} />
+              <Route path='/posts/:id' element={<Post />} />
               <Route path='/settings' element={<Settings />} />
+              <Route path='/privacy-policy' element={<PrivacyPolicy />} />
             </Routes>
           </Suspense>
         </div>

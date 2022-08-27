@@ -8,13 +8,11 @@ const url = import.meta.env.VITE_URL
 
 const Profile = () => {
   const { id } = useParams()
-  const {clearError, error, loading, sendRequest } = useHttpRequest()
+  const { loading, sendRequest } = useHttpRequest()
   const [user, setUser] = useState(null)
 
   const getUser = async() => {
-    const headers = { 'Content-Type': 'application/json' }
-    const data = await sendRequest(`${url}/user/${id}`, 'GET', null, headers)
-    console.log(data)
+    const data = await sendRequest(`${url}/user/${id}`)
     setUser(data)
   }
 
@@ -25,8 +23,14 @@ const Profile = () => {
   return (
     <>
     {loading && <Fallback />}
-    {error && <Toast type='error' message={error.message} onClose={clearError} />}
     <div className='w-screen h-screen grid place-items-center'>
+      {user && (
+        <div>
+          <img src={user.image} alt={user?.fullName} className='w-150 h-150 rounded-full object-cover' />
+          <p className='text-3xl font-semibold text-primary'>{user?.fullName}</p>
+          <p>@{user?.username}</p>
+        </div>
+      )}
     </div>
     </>
   )

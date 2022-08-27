@@ -1,8 +1,8 @@
-import { FiBell, FiEye, FiKey, FiSettings, FiUser } from 'react-icons/fi'
+import { FiBell, FiEye, FiKey, FiSettings } from 'react-icons/fi'
+import Spinner from './icons/Spinner'
+import Cookie from './images/cookie.svg'
 
-export { default as Spinner } from './icons/Spinner'
-
-export const NAVLINKS = [
+const NAVLINKS = [
     {
         title: 'Settings',
         links: [
@@ -30,7 +30,7 @@ export const NAVLINKS = [
     },
 ]
 
-export const THEME_COLORS = [
+const THEME_COLORS = [
     {
         name: 'Red',
         color: '#'
@@ -52,3 +52,5 @@ export const THEME_COLORS = [
         color: '#'
     },
 ]
+
+export { Cookie, Spinner, NAVLINKS, THEME_COLORS }

@@ -1,11 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
+import { saveToLocalStorage } from '../../libs'
+
 const url = import.meta.env.VITE_URL
 
 const initialState = {
     posts: [],
     isLoading: false,
     error: null,
+    isLiked: [],
 }
 
 export const getAllPosts = createAsyncThunk('/getAll', async(_, thunkAPI) => {
@@ -25,6 +28,19 @@ const postSlice = createSlice({
         clearFetchError: (state) => {
             state.error = null
         },
+        addToLike: (state, action) => {
+            const id = action.payload
+            let isInLiked = state.isLiked.find(liked => liked === id)
+            if(!isInLiked) {
+                state.isLiked.push(id)
+                saveToLocalStorage('isLiked', state.isLiked)
+            } else return
+        },
+        removeFromLike: (state, action) => {
+            const id = action.payload
+            state.isLiked = state.isLiked.filter(liked => liked !== id)
+            saveToLocalStorage('isLiked', state.isLiked)
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(getAllPosts.pending, (state) => {
@@ -41,5 +57,5 @@ const postSlice = createSlice({
     }
 })
 
-export const { clearFetchError } = postSlice.actions
+export const { clearFetchError, addToLike, removeFromLike } = postSlice.actions
 export default postSlice.reducer

@@ -35,7 +35,7 @@ const Sidebar = () => {
         <form onSubmit={searchHandler} className='w-full'>
           <div className='w-full h-11 flex items-center gap-2 bg-transparent border-thin px-4 py-2 focus-within:border-slate-400 rounded-md border-primary text-primary'>
             <FiSearch className='text-xl' />
-            <input type='text' name='search' value={query} onChange={(e) => setQuery(e.target.value)} placeholder='Search a user' className='w-full h-full outline-none bg-transparent placeholder:italic focus:bg-transparent' />
+            <input type='text' name='search' value={query} onChange={(e) => setQuery(e.target.value)} placeholder='Search a user' className='w-full h-full outline-none bg-transparent text-slate-900 dark:text-white placeholder:text-slate-400 placeholder:italic focus:bg-transparent' />
             <div className=''>
               {loading && <Spinner />}
             </div>

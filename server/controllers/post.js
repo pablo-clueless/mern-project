@@ -85,13 +85,13 @@ const like = async(req, res) => {
     try {
         switch(action) {
             case 'like':
-                await Post.findOneAndUpdate(postId, {$inc: {likes: 1}}, {new: true}, (err) => {
+                await Post.findOneAndUpdate({_id: postId}, {$inc: {likes: 1}}, {new: true}, (err) => {
                     if(err) return res.status(400).json({message: `Could not like post`})
                     return res.status(200).json({message: 'Post liked'})
                 })
                 break;
             case 'unlike':
-                await Post.findOneAndUpdate(postId, {$inc: {likes: -1}}, {new: true}, (err) => {
+                await Post.findOneAndUpdate({_id: postId}, {$inc: {likes: -1}}, {new: true}, (err) => {
                     if(err) return res.status(400).json({message: `Could not unlike post`})
                     return res.status(200).json({message: 'Post unliked'})
                 })
