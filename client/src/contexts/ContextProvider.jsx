@@ -4,7 +4,7 @@ import { saveToLocalStorage } from '../libs'
 
 const StateContext = createContext()
 
-const initialState = { notifications: false, profile: false }
+const initialState = { notifications: false, profile: false, new_post: false }
 
 export const ContextProvider = ({children}) => {
     const [currentMode, setCurrentMode] = useState('Light')

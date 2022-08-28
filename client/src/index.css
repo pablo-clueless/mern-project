@@ -61,8 +61,17 @@ input:-webkit-autofill {
   z-index: 20 !important;
 }
 
+.widget {
+  z-index: 25 !important;
+}
+
 .backdrop {
   z-index: 30 !important;
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  z-index: 35 !important;
 }
 
 .fallback {

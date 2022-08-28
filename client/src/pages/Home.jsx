@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { clearFetchError } from '../store/features/postSlice'
-import { Fallback, PostCard, PostForm, Sidebar, Toast } from '../components'
+import { Fallback, PostCard, Sidebar, Toast } from '../components'
 
 const Home = () => {
   const { posts, isLoading, error } = useSelector(store => store.post)
@@ -11,20 +11,19 @@ const Home = () => {
   return (
     <>
     {isLoading && <Fallback />}
-    {error && <Toast type='error' message={httpError} onClose={() => dispatch(clearFetchError())} />}
+    {error && <Toast type='error' message={error} onClose={() => dispatch(clearFetchError())} />}
     <div className='w-screen h-screen flex items-center relative'>
       <div className='w-1/3 hidden md:block h-full sidebar'>
         <Sidebar />
       </div>
       <div className='w-2/3 h-full flex flex-1 flex-col items-center px-2 pt-4'>
         <div className='w-full flex flex-col items-center overflow-y-scroll mt-20 md:mt-0'>
-          <PostForm />
           {posts?.length === 0 ? (
           <div className='w-full grid place-items-center'>
             <p className='text-2xl'>No posts yet</p>
           </div>
           ) : (
-          <div className='w-full flex flex-col items-center gap-6 pb-8 overflow-y-scroll'>
+          <div className='w-full flex flex-col items-center gap-6 py-8 overflow-y-scroll'>
             {posts?.map((post) => (<PostCard key={post._id} {...post} />))}
           </div>
           )}

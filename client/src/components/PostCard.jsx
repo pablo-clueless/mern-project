@@ -49,14 +49,14 @@ const PostCard = ({_id, body, createdBy, createdOn, image, likes, comments}) => 
         const payload = { postId: _id, by: user._id, comment, action: 'add-comment' }
         const headers = { 'Content-Type': 'application/json', 'x-access-token': token }
         const data = await sendRequest(`${url}/post/comment`, 'POST', JSON.stringify(payload), headers)
-        if(data) return window.location.reload()
+        if(data) return window.location.reload(false)
     }
 
     const deletePost = async(e) => {
         e.preventDefault()
         const headers = { 'x-access-token': token }
         const data = await sendRequest(`${url}/post/delete/${id}`, 'DELETE', null, headers)
-        if(data) return window.location.reload()
+        if(data) return window.location.reload(false)
     }
     
   return (

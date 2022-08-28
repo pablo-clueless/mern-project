@@ -1,10 +1,11 @@
 import React, { Suspense, useContext, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'universal-cookie'
+import { FiPlus } from 'react-icons/fi'
 
 import {  Home, Login, PasswordReset, Post, PrivacyPolicy, Profile, Settings, Signup } from './pages'
-import { CookieCard, Fallback, Navbar, Sidebar } from './components'
+import { CookieCard, Fallback, Navbar, PostForm, Sidebar, Widget } from './components'
 import { useStateContext } from './contexts/ContextProvider'
 import { SocketContext } from './contexts/SocketProvider'
 import { getAllPosts } from './store/features/postSlice'
@@ -13,7 +14,8 @@ import { retrieveFromLocalStorage } from './libs'
 const url = import.meta.env.VITE_URL
 
 const App = () => {
-  const { currentMode, setMode, activeMenu, isClicked } = useStateContext()
+  const { currentMode, setMode, activeMenu, isClicked, handleClick } = useStateContext()
+  const { isLoggedIn } = useSelector(store => store.auth)
   const socket = useContext(SocketContext)
   const dispatch = useDispatch()
   const cookies = new Cookies()
@@ -54,6 +56,7 @@ const App = () => {
         <div className={`absolute top-0  bg-white dark:bg-slate-700 sidebar-mobile ${activeMenu ? 'left-0' : '-left-full'} transition-all duration-300`}>
           <Sidebar />
         </div>
+        {!isLoggedIn && <Widget icon={<FiPlus/>} onClick={() => handleClick('new_post')} />}
         {/* <CookieCard /> */}
         <div>
           <Suspense fallback={<Fallback />}>
@@ -69,6 +72,7 @@ const App = () => {
             </Routes>
           </Suspense>
         </div>
+        {isClicked.new_post && <PostForm />}
       </div>
     </div>
   )

@@ -35,10 +35,10 @@ const Signup = () => {
     <>
     {httpError && <Toast type='error' message={httpError} onClose={clearError} />}
     <div className='w-screen h-screen grid place-items-center bg-welcome bg-center bg-cover'>
-      <div className='w-90 md:w-500 flex flex-col items-center bg-white bg-opacity-90 py-4 rounded-md'>
+      <div className='w-90 md:w-500 flex flex-col items-center bg-white bg-opacity-90 py-4 rounded-md border-thin border-slate-400'>
         <p className='text-3xl font-semibold text-primary mb-8'>Welcome</p>
         {/* TODO: Implement Google and Github OAuth */}
-        <div className='flex items-center gap-4 mt-4 mb-8'>
+        <div className='flex flex-col md:flex-row items-center gap-4 mt-4 mb-8'>
           <Button type='button' label='Google' icon={<FaGoogle/>} onClick={() => {}} disabled />
           <Button type='button' label='Github' icon={<FaGithub/>} onClick={() => {}} disabled />
         </div>
