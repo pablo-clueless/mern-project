@@ -18,7 +18,7 @@ const findOne = async(req, res) => {
     try {
         const post = await Post.findOne({_id: id})
         if(!post) return res.status(404).json({message: 'Post not found'})
-        return res.status(200).json({message: 'Post found', post})
+        return res.status(200).send(post)
     } catch (error) {
         return res.status(500).json({message: 'internal server error', error})
     }

@@ -30,6 +30,7 @@ const PostCard = ({_id, body, createdBy, createdOn, image, likes, comments}) => 
         const data = await sendRequest(`${url}/post/like`, 'POST', JSON.stringify(payload), headers)
         if(!data || data === undefined) return
         dispatch(addToLike(_id))
+        if(data) return window.location.reload(false)
     }
     
     const handleUnlike = async() => {
@@ -39,6 +40,7 @@ const PostCard = ({_id, body, createdBy, createdOn, image, likes, comments}) => 
         const data = await sendRequest(`${url}/post/like`, 'POST', JSON.stringify(payload), headers)
         if(!data || data === undefined) return
         dispatch(removeFromLike(_id))
+        if(data) return window.location.reload(false)
     }
 
     const handleComment = async(e) => {

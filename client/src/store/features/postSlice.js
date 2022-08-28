@@ -1,14 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import { saveToLocalStorage } from '../../libs'
+import { saveToLocalStorage, retrieveFromLocalStorage } from '../../libs'
 
 const url = import.meta.env.VITE_URL
+const likedPosts = retrieveFromLocalStorage('isLiked')
 
 const initialState = {
     posts: [],
     isLoading: false,
     error: null,
-    isLiked: [],
+    isLiked: likedPosts ? likedPosts : [],
 }
 
 export const getAllPosts = createAsyncThunk('/getAll', async(_, thunkAPI) => {

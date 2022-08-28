@@ -56,7 +56,7 @@ const signup = async(req, res) => {
 }
 
 const autoSignin = async(req, res) => {
-    const { id } = req.body
+    const { id } = req.params
     const user = await User.findOne({_id: id})
     if(!user) return res.status(404).json({message: 'Error logging you in, try logging in manually'})
     return res.send(user)

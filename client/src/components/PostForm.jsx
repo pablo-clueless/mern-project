@@ -39,7 +39,6 @@ const PostForm = () => {
         e.preventDefault()
         e.stopPropagation()
         
-        if(!isLoggedIn) return () => handleUnclick('new_post') && navigate('/signin')
         if(!message && !image) return alert('Post cannot be empty')
         const formData = new FormData()
         formData.append('body', message)
@@ -57,8 +56,8 @@ const PostForm = () => {
     }
 
     const closePostForm = () => {
-        setImage(null); setMessage('')
         handleUnclick('new_post')
+        setImage(null); setMessage('')
     }
 
   return (
@@ -71,7 +70,7 @@ const PostForm = () => {
                 <div>
                     <p className='text-xl'>New Post</p>
                 </div>
-                <button className='rounded-full p-2 bg-slate-400 text-white' onClick={() => setOpenModal(true)}>
+                <button type='button' className='rounded-full p-2 bg-slate-400 text-white' onClick={() => setOpenModal(true)}>
                     <FiX />
                 </button>
             </div>

@@ -10,6 +10,7 @@ import { useStateContext } from './contexts/ContextProvider'
 import { SocketContext } from './contexts/SocketProvider'
 import { getAllPosts } from './store/features/postSlice'
 import { retrieveFromLocalStorage } from './libs'
+import { login } from './store/features/authSlice'
 
 const url = import.meta.env.VITE_URL
 
@@ -22,21 +23,20 @@ const App = () => {
   const token = cookies.get('token')
   const id = cookies.get('devUserId')
 
-  // const persistSignin = async() => {
-  //   if(token && id) {
-  //     const headers = { 'Content-Type': 'application/json', 'x-access-token': token }
-  //     const res = await fetch(`${url}/signin/auto`, {
-  //       method: 'POST',
-  //       body: JSON.stringify({id}),
-  //       headers })
-  //     const data = await res.json()
-  //     console.log(data)
-  //   }
-  // }
+  const persistSignin = async() => {
+    if(token && id) {
+      const headers = { 'Content-Type': 'application/json', 'x-access-token': token }
+      const res = await fetch(`${url}/auth/signin/${id}`, {
+        method: 'POST',
+        headers })
+      const data = await res.json()
+      dispatch(login(data))
+    }
+  }
   
-  // useEffect(() => {
-  //   persistSignin()
-  // },[])
+  useEffect(() => {
+    persistSignin()
+  },[])
 
   useEffect(() => {
     const mode = retrieveFromLocalStorage('mode')
@@ -56,7 +56,7 @@ const App = () => {
         <div className={`absolute top-0  bg-white dark:bg-slate-700 sidebar-mobile ${activeMenu ? 'left-0' : '-left-full'} transition-all duration-300`}>
           <Sidebar />
         </div>
-        {!isLoggedIn && <Widget icon={<FiPlus/>} onClick={() => handleClick('new_post')} />}
+        {isLoggedIn && <Widget icon={<FiPlus/>} onClick={() => handleClick('new_post')} />}
         {/* <CookieCard /> */}
         <div>
           <Suspense fallback={<Fallback />}>

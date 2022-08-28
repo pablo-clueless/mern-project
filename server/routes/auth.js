@@ -9,7 +9,7 @@ router.post('/signup', signup)
 
 router.post('/signin', signin)
 
-router.post('/signin/auto', [verifyToken], autoSignin)
+router.post('/signin/:id', [verifyToken], autoSignin)
 
 router.post('/reset-password', resetPassword)
 
