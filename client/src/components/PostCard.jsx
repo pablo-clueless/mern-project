@@ -87,12 +87,12 @@ const PostCard = ({_id, body, createdBy, createdOn, image, likes, comments}) => 
             </div>
         </div>
         <div className='w-full flex items-center justify-between gap-4 px-8'>
-            <div className=''>
+            <div>
                 <Link to={`/posts/${_id}`}>
                     <FiEye className='text-lg cursor-pointer' />
                 </Link>
             </div>
-            <div className=''>
+            <div>
                 {isInLiked ? (
                     <button onClick={handleUnlike}>
                         <FiHeart className='text-lg fill-red-700 cursor-pointer' title='Unlike Post' />
@@ -104,9 +104,9 @@ const PostCard = ({_id, body, createdBy, createdOn, image, likes, comments}) => 
                 )}
             </div>
         </div>
-        <div className='w-full flex items-center justify-between px-3 py-2 border-t-thin border-slate-400 my-2'>
+        <div className='w-full flex items-center justify-between px-4 py-2 border-t-thin border-slate-400 my-2'>
             <div className='flex items-center gap-4'>
-                {user?._id === createdBy._id && isLoggedIn && (
+                {user?._id === createdBy?.id && isLoggedIn && (
                     <button onClick={deletePost}>
                         <FiTrash className='text-lg cursor-pointer' title='Delete Post' />
                     </button>
@@ -122,8 +122,8 @@ const PostCard = ({_id, body, createdBy, createdOn, image, likes, comments}) => 
                 <img src={user?.image} alt={user?.username} title={user?.username} className='w-full h-full object-cover rounded-full' />
             </div>
             <form onSubmit={handleComment} className='w-full flex items-center rounded-md border-thin border-slate-400 px-1'>
-                <input type='text' value={comment} onChange={(e) => setComment(e.target.value)} className='w-full h-10 bg-transparent text-md outline-none px-2 py-1' />
-                <button type='submit' className='bg-primary text-white border-thin border-primary hover:bg-white hover:text-primary rounded-sm text-sm px-2 py-1 transition-all duration-500 disabled:bg-slate-500 disabled:border-slate-500 disabled:hover:text-white disabled:cursor-not-allowed' disabled={!comment}>
+                <input type='text' value={comment} onChange={(e) => setComment(e.target.value)} className='w-full h-10 bg-transparent text-md font-thin outline-none px-2 py-1' />
+                <button type='submit' className='bg-primary text-white border-thin border-primary hover:bg-white hover:text-primary rounded-md text-sm px-2 py-1 transition-all duration-500 disabled:bg-slate-400 disabled:border-slate-400 disabled:hover:text-white' disabled={!comment}>
                     Comment
                 </button>
             </form>

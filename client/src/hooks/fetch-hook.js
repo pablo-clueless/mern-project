@@ -8,18 +8,18 @@ export const useHttpRequest = () => {
 
     const sendRequest = useCallback(async(url, method = 'GET', body, headers = {}) => {
         setLoading(true)
-        const httpAbortCtrl = new AbortController()
-        activeHttpRequests.current.push(httpAbortCtrl)
+        // const httpAbortCtrl = new AbortController()
+        // activeHttpRequests.current.push(httpAbortCtrl)
 
         try {
             const response = await fetch(url, {
                 method,
                 body,
                 headers,
-                signal: httpAbortCtrl.signal
+                // signal: httpAbortCtrl.signal
             })
             const data = await response.json()
-            activeHttpRequests.current = activeHttpRequests.current.filter(reqCtrl => reqCtrl !== httpAbortCtrl)
+            // activeHttpRequests.current = activeHttpRequests.current.filter(reqCtrl => reqCtrl !== httpAbortCtrl)
 
             if(!response.ok) throw new Error(data.message)
             setLoading(false)
@@ -32,11 +32,11 @@ export const useHttpRequest = () => {
 
     const clearError = () => setHttpError(null)
 
-    useEffect(() => {
-        return () => activeHttpRequests.current.forEach(abortCtrl => {
-            abortCtrl.abort()}
-        )
-    },[])
+    // useEffect(() => {
+    //     return () => activeHttpRequests.current.forEach(abortCtrl => {
+    //         abortCtrl.abort()}
+    //     )
+    // },[])
 
     return { loading, httpError, clearError, sendRequest }
 }

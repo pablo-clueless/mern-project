@@ -11,10 +11,12 @@ const postSchema = mongoose.Schema({
     likes: { type: Number, default: 0, min: 0 },
     comments: [{
         by: {
+            id: { type: String },
             name: { type: String },
             image: { type: String },
         },
         comment: { type: String },
+        likes: { type: Number, default: 0, min: 0 },
         createdOn: { type: Date, default: Date.now }
     }]
 })

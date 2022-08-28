@@ -57,7 +57,7 @@ const Sidebar = () => {
       <div className='h-full flex flex-col items-center justify-between'>
         <div className='w-full flex flex-col px-3'>
           {isLoggedIn ? (
-            <Link to={`/user/${user._id}`} className='w-full flex items-center my-1 p-1 gap-3 rounded-md hover:bg-slate-300'>
+            <Link to={`/user/${user._id}`} className='w-full flex items-center my-1 p-1 gap-3 rounded-md hover:bg-slate-300 ease-in-out duration-500' onClick={() => setActiveMenu(false)}>
               <div className='w-12 h-12 rounded-full'>
                 <img src={user?.image} alt='' className='w-full h-full rounded-full object-fit' />
               </div>
@@ -66,9 +66,11 @@ const Sidebar = () => {
               </div>
             </Link>
           ) : (
-            <Link to='/signin' onClick={() => setActiveMenu(false)} className='px-4 py-2 bg-primary text-white'>
-              Signin
-            </Link>
+            <div className='flex items-center justify-center my-2'>
+              <Link to='/signin' onClick={() => setActiveMenu(false)} className=' w-4/5 text-center py-2 bg-primary text-white'>
+                Signin
+              </Link>
+            </div>
           )}
           {NAVLINKS.map((item) => (
             <div key={item.title}>
@@ -76,7 +78,7 @@ const Sidebar = () => {
                 {item.title}
               </p>
               {item.links.map((link) => (
-                <Link key={link.name} to={link.link} className='flex items-center gap-4 pl-4 pt-3 text-slate-900 dark:text-white hover:text-primary dark:hover:text-primary duration-500'>
+                <Link key={link.name} to={link.link} className='flex items-center gap-4 my-3 px-3 py-2 text-slate-900 dark:text-white dark:hover:bg-gray-200 hover:bg-slate-200 hover:text-primary dark:hover:text-primary rounded-md duration-500' onClick={() => setActiveMenu(false)}>
                   {link.icon} <span>{link.name}</span>
                 </Link>
               ))}
@@ -86,15 +88,6 @@ const Sidebar = () => {
       </div>
     </div>
     </>
-  )
-}
-
-const Card = ({_id, username, image}) => {
-  return (
-    <Link to={`/user/${_id}`} className='flex items-center gap-2 bg-gray-200 px-2 py-1 rounded-md'>
-      {image && <img src={image} alt={username} className='w-10 h-10 object-cover rounded-full' />}
-      <p className='text-lg'>@{username}</p>
-    </Link>
   )
 }
 

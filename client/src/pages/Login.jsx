@@ -31,8 +31,9 @@ const Login = () => {
     const headers = { 'Content-Type': 'application/json' }
     const data = await sendRequest(`${url}/auth/signin`, 'POST', JSON.stringify(payload), headers)
     if(!data || data === undefined) return
-    const { token, user } = data
+    const { token, refreshToken, user } = data
     cookies.set('token', token)
+    cookies.set('refreshToken', refreshToken)
     cookies.set('devUserId', user._id)
     dispatch(login(user))
     navigate('/')

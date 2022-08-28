@@ -1,16 +1,16 @@
 import React, { Suspense, useContext, useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'universal-cookie'
 import { FiPlus } from 'react-icons/fi'
 
-import {  Home, Login, PasswordReset, Post, PrivacyPolicy, Profile, Settings, Signup } from './pages'
+import { Chat, Home, Login, PasswordReset, Post, PrivacyPolicy, Profile, Settings, Signup } from './pages'
 import { CookieCard, Fallback, Navbar, PostForm, Sidebar, Widget } from './components'
 import { useStateContext } from './contexts/ContextProvider'
 import { SocketContext } from './contexts/SocketProvider'
 import { getAllPosts } from './store/features/postSlice'
 import { retrieveFromLocalStorage } from './libs'
-import { login } from './store/features/authSlice'
+import { login, logout } from './store/features/authSlice'
 
 const url = import.meta.env.VITE_URL
 
@@ -19,24 +19,25 @@ const App = () => {
   const { isLoggedIn } = useSelector(store => store.auth)
   const socket = useContext(SocketContext)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const cookies = new Cookies()
   const token = cookies.get('token')
   const id = cookies.get('devUserId')
 
-  const persistSignin = async() => {
-    if(token && id) {
-      const headers = { 'Content-Type': 'application/json', 'x-access-token': token }
-      const res = await fetch(`${url}/auth/signin/${id}`, {
-        method: 'POST',
-        headers })
-      const data = await res.json()
-      dispatch(login(data))
-    }
-  }
+  // const persistSignin = async() => {
+  //   if(token && id) {
+  //     const headers = { 'Content-Type': 'application/json', 'x-access-token': token }
+  //     const res = await fetch(`${url}/auth/signin/${id}`, {
+  //       method: 'POST',
+  //       headers })
+  //     const data = await res.json()
+  //     dispatch(login(data))
+  //   }
+  // }
   
-  useEffect(() => {
-    persistSignin()
-  },[])
+  // useEffect(() => {
+  //   persistSignin()
+  // },[])
 
   useEffect(() => {
     const mode = retrieveFromLocalStorage('mode')
@@ -65,8 +66,9 @@ const App = () => {
               <Route path='/signup' element={<Signup />} />
               <Route path='/signin' element={<Login />} />
               <Route path='/user/:id' element={<Profile />} />
-              <Route path='/reset-password' element={<PasswordReset />} />
               <Route path='/posts/:id' element={<Post />} />
+              <Route path='/chat' element={<Chat />} />
+              <Route path='/reset-password' element={<PasswordReset />} />
               <Route path='/settings' element={<Settings />} />
               <Route path='/privacy-policy' element={<PrivacyPolicy />} />
             </Routes>

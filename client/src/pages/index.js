@@ -1,5 +1,6 @@
 import React from 'react'
 
+const Chat = React.lazy(() => import('./Chat'))
 const Home  = React.lazy(() => import('./Home'))
 const Login = React.lazy(() => import('./Login'))
 const PasswordReset = React.lazy(() => import('./PasswordReset'))
@@ -9,4 +10,4 @@ const Profile = React.lazy(() => import('./Profile'))
 const Settings = React.lazy(() => import('./Settings'))
 const Signup = React.lazy(() => import('./Signup'))
 
-export { Home, Login, PasswordReset, Post, PrivacyPolicy, Profile, Settings, Signup }
+export { Chat, Home, Login, PasswordReset, Post, PrivacyPolicy, Profile, Settings, Signup }

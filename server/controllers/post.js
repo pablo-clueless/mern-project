@@ -40,7 +40,7 @@ const create = async(req, res) => {
 
         const user = await User.findOne({_id: createdBy})
         if(!user) return res.status(404).json({message: 'User not found'})
-        const newPost = new Post({body, image: imageUrl, createdBy: {name: user.username, image: user?.image}})
+        const newPost = new Post({body, image: imageUrl, createdBy: {id: user._id, name: user.username, image: user?.image}})
         const post  = await newPost.save()
         if(!post) return res.status(400).json({message: 'Unable to add post'})
         return res.status(201).json({message: 'Post saved'})
