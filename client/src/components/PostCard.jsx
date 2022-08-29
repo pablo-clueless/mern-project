@@ -95,7 +95,7 @@ const PostCard = ({_id, body, createdBy, createdOn, image, likes, comments}) => 
             <div>
                 {isInLiked ? (
                     <button onClick={handleUnlike}>
-                        <FiHeart className='text-lg fill-red-700 cursor-pointer' title='Unlike Post' />
+                        <FiHeart className='text-lg fill-red-700 text-red-700 cursor-pointer' title='Unlike Post' />
                     </button>
                 ) : (
                     <button onClick={handleLike}>
