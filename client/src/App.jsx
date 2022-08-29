@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'universal-cookie'
 import { FiPlus } from 'react-icons/fi'
 
-import { Chat, Home, Login, PasswordReset, Post, PrivacyPolicy, Profile, Settings, Signup } from './pages'
+import { Chat, ForgotPassword, Home, Login, PasswordReset, Post, PrivacyPolicy, Profile, Settings, Signup } from './pages'
 import { CookieCard, Fallback, Navbar, PostForm, Sidebar, Widget } from './components'
 import { useStateContext } from './contexts/ContextProvider'
 import { SocketContext } from './contexts/SocketProvider'
@@ -68,7 +68,8 @@ const App = () => {
               <Route path='/user/:id' element={<Profile />} />
               <Route path='/posts/:id' element={<Post />} />
               <Route path='/chat' element={<Chat />} />
-              <Route path='/reset-password' element={<PasswordReset />} />
+              <Route path='/forgot-password' element={<ForgotPassword />} />
+              <Route path='/reset-password/:token' element={<PasswordReset />} />
               <Route path='/settings' element={<Settings />} />
               <Route path='/privacy-policy' element={<PrivacyPolicy />} />
             </Routes>

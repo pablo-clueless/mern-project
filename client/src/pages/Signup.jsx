@@ -26,9 +26,11 @@ const Signup = () => {
 
     const payload = { fullName, email, username, password }
     const headers = { 'Content-Type': 'application/json' }
-    const data = await sendRequest(`${url}/auth/signup`, 'POST', JSON.stringify(payload), headers)
-    if(!data || data === undefined) return
-    navigate('/signin')
+    try {
+      const data = await sendRequest(`${url}/auth/signup`, 'POST', JSON.stringify(payload), headers)
+      if(!data || data === undefined) return
+      navigate('/signin')
+    } catch (error) {}
   }
   
   return (

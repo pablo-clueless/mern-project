@@ -29,14 +29,16 @@ const Login = () => {
     }
     const payload = { username,password }
     const headers = { 'Content-Type': 'application/json' }
-    const data = await sendRequest(`${url}/auth/signin`, 'POST', JSON.stringify(payload), headers)
-    if(!data || data === undefined) return
-    const { token, refreshToken, user } = data
-    cookies.set('token', token)
-    cookies.set('refreshToken', refreshToken)
-    cookies.set('devUserId', user._id)
-    dispatch(login(user))
-    navigate('/')
+    try {
+      const data = await sendRequest(`${url}/auth/signin`, 'POST', JSON.stringify(payload), headers)
+      if(!data || data === undefined) return
+      const { token, refreshToken, user } = data
+      cookies.set('token', token)
+      cookies.set('refreshToken', refreshToken)
+      cookies.set('devUserId', user._id)
+      dispatch(login(user))
+      navigate('/')
+    } catch (error) {}
   }
 
   return (
@@ -58,7 +60,7 @@ const Login = () => {
               <input type='checkbox' className='w-4 h-4 cursor-pointer' />
               <span className='text-md dark:text-white'>Keep me logged in</span>
             </div>
-            <Link to='/reset-password' className='text-md text-blue-500 underline underline-offset-2 ml-2'>Forgot password?</Link>
+            <Link to='/forgot-password' className='text-md text-blue-500 underline underline-offset-2 ml-2'>Forgot password?</Link>
           </div>
           <Button type='submit' label={loading ? <Spinner /> : 'Signin'} />
         </form>

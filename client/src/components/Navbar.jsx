@@ -41,10 +41,10 @@ const Navbar = () => {
           {isLoggedIn && (
             <div className='flex items-center gap-2'>
               <button className='rounded-full p-2 text-xl dark:text-white cursor-pointer ' onClick={() => handleClick('notifications')}>
-                <FiBell className='hover:text-primary hover:fill-primary hover:animate-pulse' />
+                <FiBell className='hover:text-primary hover:fill-primary bell' />
               </button>
               <Link to='/chat' className='rounded-full p-2 text-xl dark:text-white cursor-pointer'>
-                <FiMessageSquare className='hover:text-primary hover:fill-primary hover:animate-pulse' />
+                <FiMessageSquare className='hover:text-rose-400 hover:fill-rose-400 hover:animate-pulse' />
               </Link>
             </div>
           )}

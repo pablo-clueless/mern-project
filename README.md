@@ -7,6 +7,9 @@
 - Signup and signin
 - Update user details
 - Search for users
+- Add posts with single image
+- Likes and comments on post
+- Password reset
 
 ### In view
 - Realtime chat

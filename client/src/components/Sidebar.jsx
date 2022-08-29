@@ -37,7 +37,7 @@ const Sidebar = () => {
   return (
     <>
     {error && <Toast type='error' message={error} onClose={clearError} />}
-    <div className='w-full h-full flex flex-col gap-4 px-2 py-4 md:overflow-hidden overflow-auto md:hover:overflow-auto'>
+    <div className='w-full h-full flex flex-col gap-4 px-2 py-4 md:overflow-hidden overflow-auto md:hover:overflow-auto shadow-sm shadow-slate-700 dark:shadow-white'>
       <div className='w-full px-3 relative'>
         <form onSubmit={searchHandler} className='w-full'>
           <div className='w-full h-11 flex items-center gap-2 bg-transparent border-thin px-4 py-2 focus-within:border-slate-400 rounded-md border-primary text-primary'>
@@ -67,7 +67,7 @@ const Sidebar = () => {
             </Link>
           ) : (
             <div className='flex items-center justify-center my-2'>
-              <Link to='/signin' onClick={() => setActiveMenu(false)} className=' w-4/5 text-center py-2 bg-primary text-white'>
+              <Link to='/signin' onClick={() => setActiveMenu(false)} className=' w-4/5 text-center py-2 bg-primary text-white hover:animate-pulse'>
                 Signin
               </Link>
             </div>
