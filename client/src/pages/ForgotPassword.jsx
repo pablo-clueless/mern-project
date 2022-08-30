@@ -21,7 +21,6 @@ const ForgotPassword = () => {
     const data = await sendRequest(`${url}/auth/forgot-password`, 'POST', JSON.stringify(email))
     if(!data || data === undefined) return
     console.log(data)
-    // setSuccess(data)
   }
 
   return (

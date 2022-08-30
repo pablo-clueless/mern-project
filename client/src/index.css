@@ -19,6 +19,7 @@ html {
 body {
   font-family: 'Space Grotesk', sans-serif;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 @tailwind base;
@@ -44,12 +45,7 @@ input:-webkit-autofill {
 
 .sidebar {
   box-shadow: rgb(113 122 131 / 5%) 0px 7px 30px 0px;
-}
-
-.sidebar-mobile {
-  box-shadow: rgb(113 122 131 / 5%) 0px 7px 30px 0px;
   z-index: 15 !important;
-  height: 100vh;
 }
 
 .nav-item,

@@ -8,7 +8,7 @@ import dev_logo from '../assets/images/logo.svg'
 
 const Navbar = () => {
   const { activeMenu, setActiveMenu, currentMode, setMode, screenSize, setScreenSize, handleClick } = useStateContext()
-  const { user, isLoggedIn } = useSelector(store => store.auth)
+  const { isLoggedIn } = useSelector(store => store.auth)
 
   useEffect(() => {
     const handleScreenResize = () => setScreenSize(window.innerWidth)
@@ -18,15 +18,14 @@ const Navbar = () => {
   },[])
 
   useEffect(() => {
-    screenSize > 768 && setActiveMenu(false)
+    screenSize <= 900 ? setActiveMenu(false) : setActiveMenu(true)
   },[screenSize])
 
   return (
-    <div className='w-full flex items-center justify-between bg-white dark:bg-slate-700 p-4 drop-shadow-md'>
+    <div className='w-full flex items-center justify-between bg-white dark:bg-slate-700 p-3'>
       <Link to='/'>
-        <img src={dev_logo} alt='logo' className='w-100' />
+        <img src={dev_logo} alt='logo' className='w-20' />
       </Link>
-
       <div className='flex items-center gap-2'>
         {currentMode === 'Light' ? (
           <button className='rounded-full p-2 text-xl cursor-pointer' onClick={() => setMode('Dark')}>
@@ -50,7 +49,7 @@ const Navbar = () => {
           )}
         </div>
         <div className='block md:hidden'>
-          {activeMenu ?(
+          {activeMenu ? (
             <IconButton icon={<FiX/>} onClick={() => setActiveMenu(false)} />
           ) : (
             <IconButton icon={<FiMenu/>} onClick={() => setActiveMenu(true)} />

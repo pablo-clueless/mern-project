@@ -4,12 +4,12 @@ import { saveToLocalStorage } from '../libs'
 
 const StateContext = createContext()
 
-const initialState = { notifications: false, profile: false, new_post: false }
+const initialState = { notifications: false, profile: false, new_post: false, edit_user: false }
 
 export const ContextProvider = ({children}) => {
     const [currentMode, setCurrentMode] = useState('Light')
     const [currentColor, setCurrentColor] = useState('')
-    const [activeMenu, setActiveMenu] = useState(false)
+    const [activeMenu, setActiveMenu] = useState(true)
     const [screenSize, setScreenSize] = useState(undefined)
     const [isClicked, setIsClicked] = useState(initialState)
 

@@ -36,11 +36,11 @@ const Signup = () => {
   return (
     <>
     {httpError && <Toast type='error' message={httpError} onClose={clearError} />}
-    <div className='w-screen h-screen grid place-items-center bg-welcome bg-center bg-cover'>
-      <div className='w-90 md:w-500 flex flex-col items-center bg-white bg-opacity-90 py-4 rounded-md border-thin border-slate-400'>
+    <div className='w-screen h-screen flex flex-col items-center bg-welcome bg-center bg-cover'>
+      <div className='w-90 md:w-500 flex flex-col items-center bg-white bg-opacity-90 py-4 mt-4 rounded-md border-thin border-slate-400'>
         <p className='text-3xl font-semibold text-primary mb-8'>Welcome</p>
         {/* TODO: Implement Google and Github OAuth */}
-        <div className='flex flex-col md:flex-row items-center gap-4 mt-4 mb-8'>
+        <div className='flex flex-col md:flex-row items-center gap-2 my-2'>
           <Button type='button' label='Google' icon={<FaGoogle/>} onClick={() => {}} disabled />
           <Button type='button' label='Github' icon={<FaGithub/>} onClick={() => {}} disabled />
         </div>
@@ -52,7 +52,7 @@ const Signup = () => {
           <InputField label='Confirm Password' type='password' name='confirm_password' onChange={handleChange} placeholder='********' />
           <Button type='submit' label={loading ? <Spinner/> : 'Signin'} />
         </form>
-        <div className='w-full flex flex-col items-center gap-4 my-6'>
+        <div className='w-full flex flex-col items-center gap-4 mt-2'>
           <p className='text-md'>Have an account already?
             <Link to='/signin' className='text-blue-500 underline underline-offset-2 ml-2'>Login here.</Link>
           </p>
