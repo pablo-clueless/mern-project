@@ -53,31 +53,38 @@ input:-webkit-autofill {
   z-index: 10 !important;
 }
 
-.toast {
-  z-index: 20 !important;
-}
-
-.widget {
-  z-index: 25 !important;
-}
-
 .backdrop {
   z-index: 30 !important;
   backdrop-filter: blur(2px);
+}
+
+.image {
+  z-index: 33 !important;
 }
 
 .modal {
   z-index: 35 !important;
 }
 
+.toast {
+  z-index: 38 !important;
+}
+
 .fallback {
   z-index: 40 !important;
 }
 
-.bell:hover {
+.bellshake:hover {
   animation: bellshake 1s cubic-bezier(.36,.07,.19,.97) both infinite;
-  backface-visibility: hidden;
   transform-origin: top right;
+}
+
+.vibrate:hover {
+  animation: vibrate 1s cubic-bezier(.36,.07,.19,.97) both infinite;
+}
+
+.wobble:hover {
+  animation: wobble 1s cubic-bezier(.36,.07,.19,.97) both infinite;
 }
 
 @keyframes bellshake {
@@ -90,4 +97,30 @@ input:-webkit-autofill {
   85% { transform: rotate(-6deg); }
   92% { transform: rotate(2deg); }
   100% { transform: rotate(0); }
+}
+
+@keyframes vibrate {
+  0% { transform: translateX(0); }
+  15% { transform: translateX(4px); }
+  30% { transform: translateX(-4px); }
+  45% { transform: translateX(3px); }
+  60% { transform: translateX(-3px); }
+  75% { transform: translateX(2px); }
+  85% { transform: translateX(-2px); }
+  92% { transform: translateX(1spx); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes wobble {
+  25% {
+    transform: scale(0.9, 1.1);
+  }
+
+  50% {
+    transform: scale(1.15, 0.9);
+  }
+
+  75% {
+    transform: scale(0.95, 1.05);
+  }
 }

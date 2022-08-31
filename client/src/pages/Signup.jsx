@@ -32,6 +32,13 @@ const Signup = () => {
       navigate('/signin')
     } catch (error) {}
   }
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+        clearError()
+    },5000)
+    return () => clearTimeout(timeOut)
+  },[httpError])
   
   return (
     <>

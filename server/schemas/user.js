@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
     messages: [{
         by: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         body: { type: String },
-        time: { type: Date }
+        time: { type: Date, default: Date.now }
     }]
 })
 

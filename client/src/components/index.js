@@ -1,6 +1,7 @@
 export { default as Button } from './Button'
 export { default as Chat } from './Chat'
 export { default as CookieCard } from './CookieCard'
+export { default as EditUser } from './EditUser'
 export { default as Fallback } from './Fallback'
 export { default as InputField } from './InputField'
 export { default as Modal } from './Modal'

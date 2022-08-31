@@ -41,6 +41,13 @@ const Login = () => {
     } catch (error) {}
   }
 
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+        clearError()
+    },5000)
+    return () => clearTimeout(timeOut)
+},[httpError])
+
   return (
     <>
     {httpError && <Toast type='error' message={httpError} onClose={clearError} />}
@@ -49,15 +56,15 @@ const Login = () => {
         <p className='text-3xl font-semibold text-primary mb-8'>Welcome Back</p>
         {/* TODO: Implement Google and Github OAuth */}
         <div className='flex flex-col md:flex-row items-center gap-4 mt-4 mb-8'>
-          <Button type='button' label='Signin with Google' icon={<FaGoogle/>} onClick={() => {}} disabled />
-          <Button type='button' label='Signin with Github' icon={<FaGithub/>} onClick={() => {}} disabled />
+          <Button type='button' label='Google' icon={<FaGoogle/>} onClick={() => {}} disabled />
+          <Button type='button' label='Github' icon={<FaGithub/>} onClick={() => {}} disabled />
         </div>
         <form onSubmit={signinHandler} className='w-full flex flex-col items-center'>
           <InputField label='Username' type='text' name='username' onChange={handleChange} placeholder='john-doe' />
           <InputField label='Password' type='password' name='password' onChange={handleChange} placeholder='********' />
           <div className='w-4/5 flex items-center justify-between'>
             <div className='flex items-center gap-1'>
-              <input type='checkbox' className='w-4 h-4 cursor-pointer' />
+              <input type='checkbox' className='w-4 h-4 cursor-pointer' disabled />
               <span className='text-md dark:text-white'>Keep me logged in</span>
             </div>
             <Link to='/forgot-password' className='text-md text-blue-500 underline underline-offset-2 ml-2'>Forgot password?</Link>

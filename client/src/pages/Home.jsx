@@ -17,10 +17,10 @@ const Home = () => {
         <Sidebar />
       </div>
       <div className='h-screen flex flex-1 flex-col items-center'>
-        <div className='w-95 bg-white dark:bg-slate-700 rounded-md'>
+        <div className='w-98 bg-white dark:bg-slate-700 rounded-md'>
           <PostForm />
         </div>
-        <div className='w-95 rounded-md overflow-y-scroll mt-4 pb-20'>
+        <div className='w-98 rounded-md overflow-y-scroll mt-4 pb-20'>
           {posts?.length === 0 ? (
           <div className='w-full grid place-items-center'>
             <p className='text-2xl'>No posts yet</p>

@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { FiEye, FiHeart, FiMessageCircle, FiMoreHorizontal, FiTrash } from 'react-icons/fi'
+import { FiHeart, FiMessageCircle, FiMoreHorizontal } from 'react-icons/fi'
 import Cookies from 'universal-cookie'
+import { motion } from 'framer-motion'
 
 import { addToLike, removeFromLike } from '../store/features/postSlice'
 import { useHttpRequest } from '../hooks'
@@ -11,9 +12,15 @@ import { Default } from '../assets'
 
 const url = import.meta.env.VITE_URL
 
+const initial = { opacity: 0, scale: 0.5};
+const animate = {opacity: 1,scale: 1};
+const transition = {default: {duration: 1, ease: [0, 0.71, 0.2, 1.01]}};
+const scale = {type: 'spring',stiffness: 100,dumping: 5,restDelta: 0.001};
+
 const PostCard = ({_id, body, createdBy, createdOn, image, likes, comments}) => {
     const { clearError, httpError, sendRequest } = useHttpRequest()
     const { user, isLoggedIn } = useSelector(store => store.auth)
+    const [imageFullScreen, setImageFullScreen] = useState(false)
     const { isLiked } = useSelector(store => store.post)
     const [comment, setComment] = useState('')
     const dispatch = useDispatch()
@@ -63,6 +70,9 @@ const PostCard = ({_id, body, createdBy, createdOn, image, likes, comments}) => 
     
   return (
     <>
+    {imageFullScreen && image && (<div className='w-screen h-screen grid place-items-center bg-gray-100 bg-opacity-60 fixed top-0 left-0 cursor-pointer image' onClick={() => setImageFullScreen(false)}>
+        <motion.img src={image} alt='' className='w-1/2' initial={initial} animate={animate} transition={{default: transition, scale: scale}} onClick={(e) => e.stopPropagation()} />
+    </div>)}
     {httpError && <Toast type='error' message={httpError} onClose={clearError} />}
     <div className='w-full flex flex-col bg-white dark:bg-slate-700 rounded-md p-2'>
         <div className='w-full flex items-center justify-between px-2'>
@@ -75,17 +85,17 @@ const PostCard = ({_id, body, createdBy, createdOn, image, likes, comments}) => 
                     )}
                 </div>
                 <div className='flex flex-col'>
-                    <p className='text-lg text-primary dark:text-white font-light'>@{createdBy.name}</p>
-                    <p className='text-xs'>{new Date(createdOn).toLocaleString()}</p>
+                    <p className='text-lg text-primary font-light'>@{createdBy.name}</p>
+                    <p className='text-xs dark:text-white'>{new Date(createdOn).toLocaleString()}</p>
                 </div>
             </div>
             <div>
                 <FiMoreHorizontal className='text-xl dark:text-white cursor-pointer' title='More Options' />
             </div>
         </div>
-        <div className='w-full flex flex-col items-center my-1'>
-            {image && (<div className='w-300 my-2 rounded-lg'>
-                <img src={image} alt='post-image' className='w-full object-cover rounded-lg' />
+        <div className='w-full flex flex-col items-center my-1 dark:text-white'>
+            {image && (<div className='w-300 my-2 rounded-lg cursor-pointer' onClick={() => {}}>
+                <img src={image} alt='post-image' className='w-full object-cover rounded-lg' onClick={() => setImageFullScreen(true)} />
             </div>)}
             <div className='w-full p-2'>
                 <p>{body}</p>
