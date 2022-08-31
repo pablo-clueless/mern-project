@@ -24,6 +24,7 @@ const morgan =  require('morgan')
 
 const { User } = require('./schemas')
 const authRoutes = require('./routes/auth')
+// const googleAuthRoutes = require('./utils/google-auth')
 const userRoutes = require('./routes/user')
 const postRoutes = require('./routes/post')
 const { sessionMiddleWare } = require('./middlewares/session')
@@ -53,6 +54,21 @@ db.on('error', console.error.bind(console, 'Connection error: '))
 
 app.get('/', (req,res) => res.status(200).json({message: `Welcome to Developer's Hub`}))
 
+app.post('/mail-test', (req, res) => {
+    const { email } = req.body
+    let mailOptions = {
+        from: 'DevHub Team',
+        to: email,
+        subject: 'Password Reset',
+        text: `Hey there, let's process your password reset`,
+        html: resetEmailTemp,
+    }
+    transporter.sendMail(mailOptions, (err, info) => {
+        if(err) return res.send(err)
+        if(info) return res.send(info)
+    })
+})
+
 const wrap = middleWare => (socket, next) => middleWare(socket.request, {}, next)
 io.use(wrap(sessionMiddleWare))
 
@@ -67,6 +83,7 @@ transporter.verify((err, success) => {
 })
 
 app.use('/auth', authRoutes)
+// app.use('/auth', googleAuthRoutes)
 app.use('/user', userRoutes)
 app.use('/post', postRoutes)
 

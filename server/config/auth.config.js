@@ -1,4 +1,6 @@
+require('dotenv').config()
+
 module.exports = {
-    secret: 'auth-secret-maverick',
-    refresh_secret: 'auth-refresh-rooster',
+    secret: process.env.JWT_ACCESS_SERET,
+    refresh_secret: process.env.JWT_REFRESH_SECRET,
 }

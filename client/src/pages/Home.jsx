@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { clearFetchError } from '../store/features/postSlice'
@@ -7,6 +7,13 @@ import { Fallback, Navbar, PostCard, PostForm, Sidebar, Toast } from '../compone
 const Home = () => {
   const { posts, isLoading, error } = useSelector(store => store.post)
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      clearFetchError()
+    },5000)
+    return () => clearTimeout(timeOut)
+  },[error])
 
   return (
     <>

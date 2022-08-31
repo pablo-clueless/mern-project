@@ -9,6 +9,8 @@ import { getAllPosts } from './store/features/postSlice'
 import { login } from './store/features/authSlice'
 import { retrieveFromLocalStorage } from './libs'
 
+const url = import.meta.env.VITE_URL
+
 const App = () => {
   const { currentMode, setMode, isClicked } = useStateContext()
   const dispatch = useDispatch()
